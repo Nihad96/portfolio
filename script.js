@@ -1,3 +1,14 @@
+document.addEventListener('DOMContentLoaded', function () {
+  const cookie = document.cookie.split('; ').find(r => r.startsWith('display_mode='));
+  const mode = cookie ? cookie.split('=')[1] : 'light';
+  if (!cookie) {
+    let expires = new Date();
+    expires.setFullYear(expires.getFullYear() + 1);
+    document.cookie = "display_mode=" + mode + "; expires=" + expires.toUTCString() + "; path=/";
+  }
+  document.body.id = mode;
+});
+
 function menu(id) {
   document.getElementById(id + '_section').scrollIntoView({behavior:'smooth'});
 

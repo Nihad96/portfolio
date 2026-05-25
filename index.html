@@ -1,11 +1,3 @@
-<?php
-if(!isset($_COOKIE['display_mode'])) {
-    $_COOKIE['display_mode'] = 'dark';
-    $expiryDate = time() + 365 * 24 * 60 * 60; // One year in seconds
-    setcookie("display_mode", "light", $expiryDate, "/");
-}
-?>
-
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -26,7 +18,7 @@ if(!isset($_COOKIE['display_mode'])) {
 <link rel="icon" type="image/png" sizes="32x32" href="images/icons/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="images/icons/favicon-16x16.png">
 
-    <body id="<?php echo($_COOKIE['display_mode']) ?>">
+    <body id="light">
         <div id="wrapper">
             <div id="header">
                 <div id="heading">
@@ -46,7 +38,7 @@ if(!isset($_COOKIE['display_mode'])) {
                     <div id="social">
                         <i class="fa-brands fa-linkedin" onclick="window.open('https://www.linkedin.com/in/nihadzatric/')"></i>
                         <i class="fa-brands fa-github" onclick="window.open('https://github.com/Nihad96')"></i>
-                        <i id="display_mode_button" class="fa-solid fa-lightbulb" onclick="setDisplayMode('<?php echo($_COOKIE['display_mode']) ?>')"></i>
+                        <i id="display_mode_button" class="fa-solid fa-lightbulb" onclick="setDisplayMode(document.body.id)"></i>
                     </div>
                 </div>
             </div>
