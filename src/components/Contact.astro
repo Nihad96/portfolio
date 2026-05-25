@@ -1,0 +1,189 @@
+---
+import { contact } from '../data/content';
+---
+
+<section id="contact">
+  <div class="container">
+
+    <div class="section-header reveal">
+      <span class="section-number accent">04</span>
+      <h2 class="section-title">Contact</h2>
+    </div>
+
+    <div class="contact-inner">
+      <div class="contact-text reveal">
+        <p>
+          Disponible pour des opportunités freelance ou une collaboration en CDI.
+          N'hésitez pas à me contacter directement par e-mail.
+        </p>
+      </div>
+
+      <div class="contact-links reveal">
+        <a href={`mailto:${contact.email}`} class="email-link">
+          <i class="fa-solid fa-envelope"></i>
+          {contact.email}
+          <i class="fa-solid fa-arrow-up-right-from-square email-arrow"></i>
+        </a>
+
+        <div class="social-links">
+          {contact.socials.map((social) => (
+            <a
+              href={social.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="social-link"
+              aria-label={social.label}
+            >
+              <i class={social.icon}></i>
+              <span>{social.label}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-bar">
+    <div class="container footer-inner">
+      <span>© {new Date().getFullYear()} Nihad Zatric</span>
+      <span class="footer-built">Construit avec <a href="https://astro.build" target="_blank" rel="noopener noreferrer">Astro</a> & <a href="https://tailwindcss.com" target="_blank" rel="noopener noreferrer">Tailwind</a></span>
+    </div>
+  </div>
+</section>
+
+<style>
+  #contact {
+    padding-top: 6rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 3.5rem;
+  }
+
+  .section-number {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+  }
+
+  .section-title {
+    font-family: var(--font-heading);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    color: var(--text);
+  }
+
+  .contact-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+    padding-bottom: 5rem;
+  }
+
+  .contact-text p {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    line-height: 1.75;
+    max-width: 400px;
+  }
+
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .email-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 1rem 1.25rem;
+    border-radius: 10px;
+    transition: border-color 0.2s, background-color 0.2s, color 0.2s, transform 0.15s;
+  }
+
+  .email-link:hover {
+    border-color: var(--border-hover);
+    background-color: var(--bg-card-hover);
+    color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  .email-arrow {
+    margin-left: auto;
+    font-size: 0.75rem;
+    opacity: 0.5;
+  }
+
+  .social-links {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .social-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    transition: color 0.2s, border-color 0.2s, background-color 0.2s, transform 0.15s;
+  }
+
+  .social-link:hover {
+    color: var(--accent);
+    border-color: var(--border-hover);
+    background-color: var(--bg-card-hover);
+    transform: translateY(-2px);
+  }
+
+  /* Footer bar */
+  .footer-bar {
+    border-top: 1px solid var(--border);
+    padding-block: 1.25rem;
+  }
+
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .footer-inner span {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  .footer-built a {
+    color: var(--text-muted);
+    transition: color 0.2s;
+    font-weight: 500;
+  }
+
+  .footer-built a:hover { color: var(--accent); }
+
+  @media (max-width: 640px) {
+    .contact-inner {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    .social-links { flex-wrap: wrap; }
+    .footer-inner { justify-content: center; text-align: center; }
+  }
+</style>

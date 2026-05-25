@@ -1,0 +1,78 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Nihad Zatric — Développeur web full stack',
+  description = 'Portfolio de Nihad Zatric, développeur web full stack spécialisé dans la conception d\'applications métier. Basé à Strasbourg.',
+} = Astro.props;
+
+const ogImage = 'https://nihad.fr/images/icons/android-chrome-512x512.png';
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="512" />
+    <meta property="og:image:height" content="512" />
+    <meta property="og:image:alt" content="Nihad Zatric" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://nihad.fr" />
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/icons/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/icons/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/icons/favicon-16x16.png" />
+    <link rel="manifest" href="/images/icons/site.webmanifest" />
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/645c1d137c.js" crossorigin="anonymous" async></script>
+
+    <title>{title}</title>
+
+    <!-- Dark/light mode: apply before paint to avoid flash -->
+    <script is:inline>
+      (function () {
+        const cookie = document.cookie.split('; ').find(r => r.startsWith('theme='));
+        const theme = cookie ? cookie.split('=')[1] : 'dark';
+        if (theme === 'light') {
+          document.documentElement.classList.add('light');
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <slot />
+
+    <!-- Intersection Observer for reveal animations -->
+    <script is:inline>
+      document.addEventListener('DOMContentLoaded', function () {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.1 }
+        );
+        document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+      });
+    </script>
+  </body>
+</html>
