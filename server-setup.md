@@ -191,7 +191,9 @@ Coolify > Application > Deploy
 
 ---
 
-## 10. Configurer le CI/CD (déploiement automatique sur push GitHub)
+## 10. Configurer le CI/CD avec GitHub Actions
+
+Le déploiement automatique est géré via GitHub Actions. À chaque `push` sur `main`, un workflow appelle le webhook Coolify avec un token d'authentification.
 
 ### 10.1 Récupérer l'URL du webhook dans Coolify
 
@@ -204,18 +206,52 @@ L'URL ressemble à :
 https://coolify.nihad.fr/api/v1/deploy?uuid=XXXX&force=false
 ```
 
-### 10.2 Ajouter le webhook dans GitHub
+### 10.2 Générer un token API Coolify
 
 ```
-GitHub > Repo > Settings > Webhooks > Add webhook
+Coolify > Profile > API Tokens > New Token
 ```
 
-Paramètres :
-- **Payload URL** : l'URL copiée depuis Coolify
-- **Content type** : `application/json`
-- **Which events** : `Just the push event`
+- **Permissions** : `deploy` uniquement (principe du moindre privilège)
+- **Expiration** : "Never" ou la durée la plus longue — un token qui expire casse le CI/CD silencieusement
 
-Désormais, chaque `git push` sur `main` déclenche automatiquement un redéploiement.
+Copier le token immédiatement, il ne sera plus affiché ensuite.
+
+### 10.3 Ajouter les secrets dans GitHub
+
+```
+GitHub > repo > Settings > Secrets and variables > Actions > New repository secret
+```
+
+Ajouter deux secrets :
+- `COOLIFY_WEBHOOK_URL` : l'URL complète du webhook Coolify
+- `COOLIFY_TOKEN` : le token API généré à l'étape précédente
+
+### 10.4 Le workflow GitHub Actions
+
+Le fichier `.github/workflows/deploy.yml` est déjà présent dans le repo :
+
+```yaml
+name: Deploy to production
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Trigger Coolify deployment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call Coolify webhook
+        run: |
+          curl -s -o /dev/null -w "%{http_code}" \
+            -X GET "${{ secrets.COOLIFY_WEBHOOK_URL }}" \
+            -H "Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}"
+```
+
+Désormais, chaque `git push` sur `main` déclenche automatiquement un redéploiement via GitHub Actions.
 
 ---
 
