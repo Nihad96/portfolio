@@ -1,173 +1,238 @@
 ---
-import { useTranslations } from '../i18n/utils';
-import type { Locale } from '../i18n/ui';
-import type { AboutData, Stack } from '../data/types';
+import { useTranslations } from "../i18n/utils";
+import type { Locale } from "../i18n/ui";
+import type { AboutData, Stack } from "../data/types";
 
 interface Props {
-  lang: Locale;
-  about: AboutData;
-  stack: Stack[];
+    lang: Locale;
+    about: AboutData;
+    stack: Stack[];
 }
 
 const { lang, about, stack } = Astro.props;
 const t = useTranslations(lang);
 
 const categoryColor: Record<string, string> = {
-  backend:  'tag-backend',
-  frontend: 'tag-frontend',
-  tools:    'tag-tools',
-  db:       'tag-db',
+    backend: "tag-backend",
+    frontend: "tag-frontend",
+    tools: "tag-tools",
+    db: "tag-db",
 };
 ---
 
 <section id="about">
-  <div class="container">
-
-    <div class="section-header reveal">
-      <span class="section-number accent">01</span>
-      <h2 class="section-title">{t('about_title')}</h2>
-    </div>
-
-    <div class="about-grid">
-      <div class="about-bio">
-        {about.bio[lang].map((paragraph) => (
-          <p class="reveal">{paragraph}</p>
-        ))}
-        <a href={about.cv[lang]} download class="cv-link reveal">
-          <i class="fa-solid fa-file-arrow-down"></i>
-          {t('about_download_cv')}
-        </a>
-      </div>
-
-      <div class="about-stack reveal">
-        <p class="stack-label">{t('about_tech')}</p>
-        <div class="tag-cloud">
-          {stack.map((item) => (
-            <span class={`tag ${categoryColor[item.category]}`}>{item.label}</span>
-          ))}
+    <div class="container">
+        <div class="section-header reveal">
+            <span class="section-number accent">01</span>
+            <h2 class="section-title">{t("about_title")}</h2>
         </div>
-      </div>
-    </div>
 
-  </div>
+        <div class="about-grid">
+            <div class="about-bio">
+                {
+                    about.bio[lang].map((paragraph) => (
+                        <p class="reveal">{paragraph}</p>
+                    ))
+                }
+                <a
+                    href={about.cv[lang]}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="cv-link reveal"
+                >
+                    <i class="fa-solid fa-eye"></i>
+                    {t("about_download_cv")}
+                </a>
+            </div>
+
+            <div class="about-stack reveal">
+                <p class="stack-label">{t("about_tech")}</p>
+                <div class="tag-cloud">
+                    {
+                        stack.map((item) => (
+                            <span class={`tag ${categoryColor[item.category]}`}>
+                                {item.label}
+                            </span>
+                        ))
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
 <style>
-  #about {
-    padding-block: 6rem;
-    border-top: 1px solid var(--border);
-  }
+    #about {
+        padding-block: 6rem;
+        border-top: 1px solid var(--border);
+    }
 
-  .section-header {
-    display: flex;
-    align-items: baseline;
-    gap: 1rem;
-    margin-bottom: 3.5rem;
-  }
+    .section-header {
+        display: flex;
+        align-items: baseline;
+        gap: 1rem;
+        margin-bottom: 3.5rem;
+    }
 
-  .section-number {
-    font-family: var(--font-heading);
-    font-size: 1rem;
-    letter-spacing: 0.1em;
-  }
+    .section-number {
+        font-family: var(--font-heading);
+        font-size: 1rem;
+        letter-spacing: 0.1em;
+    }
 
-  .section-title {
-    font-family: var(--font-heading);
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    color: var(--text);
-  }
+    .section-title {
+        font-family: var(--font-heading);
+        font-size: clamp(2.5rem, 5vw, 4rem);
+        color: var(--text);
+    }
 
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: start;
-  }
+    .about-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: start;
+    }
 
-  .about-bio {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-  }
+    .about-bio {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+    }
 
-  .about-bio p {
-    font-size: 1.05rem;
-    color: var(--text-muted);
-    line-height: 1.75;
-  }
+    .about-bio p {
+        font-size: 1.05rem;
+        color: var(--text-muted);
+        line-height: 1.75;
+    }
 
-  .cv-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--accent);
-    border: 1px solid var(--border-hover);
-    padding: 0.6rem 1.1rem;
-    border-radius: 6px;
-    width: fit-content;
-    margin-top: 0.5rem;
-    transition: background-color 0.2s, transform 0.15s;
-  }
+    .cv-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--accent);
+        border: 1px solid var(--border-hover);
+        padding: 0.6rem 1.1rem;
+        border-radius: 6px;
+        width: fit-content;
+        margin-top: 0.5rem;
+        transition:
+            background-color 0.2s,
+            transform 0.15s;
+    }
 
-  .cv-link:hover {
-    background-color: var(--bg-card);
-    transform: translateY(-1px);
-  }
+    .cv-link:hover {
+        background-color: var(--bg-card);
+        transform: translateY(-1px);
+    }
 
-  .about-stack {
-    position: sticky;
-    top: 80px;
-  }
+    .about-stack {
+        position: sticky;
+        top: 80px;
+    }
 
-  .stack-label {
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 1.25rem;
-  }
+    .stack-label {
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        margin-bottom: 1.25rem;
+    }
 
-  .tag-cloud {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
+    .tag-cloud {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
 
-  .tag {
-    font-size: 0.8rem;
-    font-weight: 500;
-    padding: 0.35rem 0.75rem;
-    border-radius: 4px;
-    border: 1px solid var(--border);
-    transition: border-color 0.2s, background-color 0.2s;
-    cursor: default;
-  }
+    .tag {
+        font-size: 0.8rem;
+        font-weight: 500;
+        padding: 0.35rem 0.75rem;
+        border-radius: 4px;
+        border: 1px solid var(--border);
+        transition:
+            border-color 0.2s,
+            background-color 0.2s;
+        cursor: default;
+    }
 
-  .tag:hover { border-color: var(--border-hover); background-color: var(--bg-card); }
+    .tag:hover {
+        border-color: var(--border-hover);
+        background-color: var(--bg-card);
+    }
 
-  /* Category tints */
-  .tag-backend  { color: #C6FF00; border-color: rgba(198,255,0,0.2); background-color: rgba(198,255,0,0.05); }
-  .tag-frontend { color: #38BDF8; border-color: rgba(56,189,248,0.2); background-color: rgba(56,189,248,0.05); }
-  .tag-db       { color: #FB923C; border-color: rgba(251,146,60,0.2); background-color: rgba(251,146,60,0.05); }
-  .tag-tools    { color: #A78BFA; border-color: rgba(167,139,250,0.2); background-color: rgba(167,139,250,0.05); }
+    /* Category tints */
+    .tag-backend {
+        color: #c6ff00;
+        border-color: rgba(198, 255, 0, 0.2);
+        background-color: rgba(198, 255, 0, 0.05);
+    }
+    .tag-frontend {
+        color: #38bdf8;
+        border-color: rgba(56, 189, 248, 0.2);
+        background-color: rgba(56, 189, 248, 0.05);
+    }
+    .tag-db {
+        color: #fb923c;
+        border-color: rgba(251, 146, 60, 0.2);
+        background-color: rgba(251, 146, 60, 0.05);
+    }
+    .tag-tools {
+        color: #a78bfa;
+        border-color: rgba(167, 139, 250, 0.2);
+        background-color: rgba(167, 139, 250, 0.05);
+    }
 
-  /* Light mode — palette diversifiée */
-  :global(.light) .tag-backend  { color: #2563EB; border-color: rgba(37,99,235,0.35);   background-color: rgba(37,99,235,0.06); }
-  :global(.light) .tag-frontend { color: #0D9488; border-color: rgba(13,148,136,0.35);  background-color: rgba(13,148,136,0.06); }
-  :global(.light) .tag-db       { color: #E11D48; border-color: rgba(225,29,72,0.35);   background-color: rgba(225,29,72,0.06); }
-  :global(.light) .tag-tools    { color: #7C3AED; border-color: rgba(124,58,237,0.35);  background-color: rgba(124,58,237,0.06); }
+    /* Light mode — palette diversifiée */
+    :global(.light) .tag-backend {
+        color: #2563eb;
+        border-color: rgba(37, 99, 235, 0.35);
+        background-color: rgba(37, 99, 235, 0.06);
+    }
+    :global(.light) .tag-frontend {
+        color: #0d9488;
+        border-color: rgba(13, 148, 136, 0.35);
+        background-color: rgba(13, 148, 136, 0.06);
+    }
+    :global(.light) .tag-db {
+        color: #e11d48;
+        border-color: rgba(225, 29, 72, 0.35);
+        background-color: rgba(225, 29, 72, 0.06);
+    }
+    :global(.light) .tag-tools {
+        color: #7c3aed;
+        border-color: rgba(124, 58, 237, 0.35);
+        background-color: rgba(124, 58, 237, 0.06);
+    }
 
-  /* Hover avec bordure colorée par catégorie en light mode */
-  :global(.light) .tag-backend:hover  { border-color: rgba(37,99,235,0.7);   background-color: rgba(37,99,235,0.12); }
-  :global(.light) .tag-frontend:hover { border-color: rgba(13,148,136,0.7);  background-color: rgba(13,148,136,0.12); }
-  :global(.light) .tag-db:hover       { border-color: rgba(225,29,72,0.7);   background-color: rgba(225,29,72,0.12); }
-  :global(.light) .tag-tools:hover    { border-color: rgba(124,58,237,0.7);  background-color: rgba(124,58,237,0.12); }
+    /* Hover avec bordure colorée par catégorie en light mode */
+    :global(.light) .tag-backend:hover {
+        border-color: rgba(37, 99, 235, 0.7);
+        background-color: rgba(37, 99, 235, 0.12);
+    }
+    :global(.light) .tag-frontend:hover {
+        border-color: rgba(13, 148, 136, 0.7);
+        background-color: rgba(13, 148, 136, 0.12);
+    }
+    :global(.light) .tag-db:hover {
+        border-color: rgba(225, 29, 72, 0.7);
+        background-color: rgba(225, 29, 72, 0.12);
+    }
+    :global(.light) .tag-tools:hover {
+        border-color: rgba(124, 58, 237, 0.7);
+        background-color: rgba(124, 58, 237, 0.12);
+    }
 
-  @media (max-width: 768px) {
-    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-    .about-stack { position: static; }
-  }
+    @media (max-width: 768px) {
+        .about-grid {
+            grid-template-columns: 1fr;
+            gap: 2.5rem;
+        }
+        .about-stack {
+            position: static;
+        }
+    }
 </style>

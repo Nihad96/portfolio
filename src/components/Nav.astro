@@ -1,265 +1,322 @@
 ---
-import LangToggle from './LangToggle.astro';
-import { useTranslations } from '../i18n/utils';
-import type { Locale } from '../i18n/ui';
+import LangToggle from "./LangToggle.astro";
+import { useTranslations } from "../i18n/utils";
+import type { Locale } from "../i18n/ui";
 
 interface Props {
-  lang: Locale;
-  cvPath: string;
+    lang: Locale;
+    cvPath: string;
 }
 
 const { lang, cvPath } = Astro.props;
 const t = useTranslations(lang);
 
 const navLinks = [
-  { label: t('nav_about'),      href: '#about' },
-  { label: t('nav_experience'), href: '#experience' },
-  { label: t('nav_projects'),   href: '#projects' },
-  { label: t('nav_contact'),    href: '#contact' },
+    { label: t("nav_about"), href: "#about" },
+    { label: t("nav_experience"), href: "#experience" },
+    { label: t("nav_projects"), href: "#projects" },
+    { label: t("nav_contact"), href: "#contact" },
 ];
 ---
 
 <header id="nav">
-  <div class="container nav-inner">
-    <a href={lang === 'fr' ? '/' : '/en/'} class="nav-logo">NZ<span class="accent">.</span></a>
+    <div class="container nav-inner">
+        <a href={lang === "fr" ? "/" : "/en/"} class="nav-logo"
+            >NZ<span class="accent">.</span></a
+        >
 
-    <nav class="nav-links">
-      {navLinks.map((link) => (
-        <a href={link.href} class="nav-link">{link.label}</a>
-      ))}
-    </nav>
+        <nav class="nav-links">
+            {
+                navLinks.map((link) => (
+                    <a href={link.href} class="nav-link">
+                        {link.label}
+                    </a>
+                ))
+            }
+        </nav>
 
-    <div class="nav-actions">
-      <a href={cvPath} download class="btn-cv">
-        <i class="fa-solid fa-file-arrow-down"></i>
-        <span>CV</span>
-      </a>
-      <LangToggle lang={lang} />
-      <button id="theme-toggle" aria-label={t('nav_toggle_theme')} title={t('nav_toggle_theme')}>
-        <i class="fa-solid fa-circle-half-stroke"></i>
-      </button>
+        <div class="nav-actions">
+            <a
+                href={cvPath}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn-cv"
+            >
+                <i class="fa-solid fa-eye"></i>
+                <span>CV</span>
+            </a>
+            <LangToggle lang={lang} />
+            <button
+                id="theme-toggle"
+                aria-label={t("nav_toggle_theme")}
+                title={t("nav_toggle_theme")}
+            >
+                <i class="fa-solid fa-circle-half-stroke"></i>
+            </button>
+        </div>
+
+        <!-- Mobile hamburger -->
+        <button
+            id="mobile-menu-btn"
+            aria-label={t("nav_menu")}
+            aria-expanded="false"
+        >
+            <i class="fa-solid fa-bars" id="hamburger-icon"></i>
+        </button>
     </div>
 
-    <!-- Mobile hamburger -->
-    <button id="mobile-menu-btn" aria-label={t('nav_menu')} aria-expanded="false">
-      <i class="fa-solid fa-bars" id="hamburger-icon"></i>
-    </button>
-  </div>
-
-  <!-- Mobile nav -->
-  <div id="mobile-nav" class="mobile-nav" hidden>
-    {navLinks.map((link) => (
-      <a href={link.href} class="mobile-nav-link">{link.label}</a>
-    ))}
-    <div class="mobile-nav-actions">
-      <a href={cvPath} download class="mobile-cv-link">
-        <i class="fa-solid fa-file-arrow-down"></i>
-        CV
-      </a>
-      <LangToggle lang={lang} />
+    <!-- Mobile nav -->
+    <div id="mobile-nav" class="mobile-nav" hidden>
+        {
+            navLinks.map((link) => (
+                <a href={link.href} class="mobile-nav-link">
+                    {link.label}
+                </a>
+            ))
+        }
+        <div class="mobile-nav-actions">
+            <a
+                href={cvPath}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="mobile-cv-link"
+            >
+                <i class="fa-solid fa-eye"></i>
+                CV
+            </a>
+            <LangToggle lang={lang} />
+        </div>
     </div>
-  </div>
 </header>
 
 <script is:inline>
-  // Theme toggle
-  document.getElementById('theme-toggle').addEventListener('click', function () {
-    const isLight = document.documentElement.classList.toggle('light');
-    const theme = isLight ? 'light' : 'dark';
-    let expires = new Date();
-    expires.setFullYear(expires.getFullYear() + 1);
-    document.cookie = 'theme=' + theme + '; expires=' + expires.toUTCString() + '; path=/';
-  });
+    // Theme toggle
+    document
+        .getElementById("theme-toggle")
+        .addEventListener("click", function () {
+            const isLight = document.documentElement.classList.toggle("light");
+            const theme = isLight ? "light" : "dark";
+            let expires = new Date();
+            expires.setFullYear(expires.getFullYear() + 1);
+            document.cookie =
+                "theme=" +
+                theme +
+                "; expires=" +
+                expires.toUTCString() +
+                "; path=/";
+        });
 
-  // Scrolled state
-  const nav = document.getElementById('nav');
-  window.addEventListener('scroll', function () {
-    nav.classList.toggle('scrolled', window.scrollY > 40);
-  }, { passive: true });
+    // Scrolled state
+    const nav = document.getElementById("nav");
+    window.addEventListener(
+        "scroll",
+        function () {
+            nav.classList.toggle("scrolled", window.scrollY > 40);
+        },
+        { passive: true },
+    );
 
-  // Mobile menu
-  const mobileBtn = document.getElementById('mobile-menu-btn');
-  const mobileNav = document.getElementById('mobile-nav');
-  mobileBtn.addEventListener('click', function () {
-    const open = mobileNav.hidden;
-    mobileNav.hidden = !open;
-    mobileBtn.setAttribute('aria-expanded', String(open));
-  });
-
-  // Close mobile nav on link click
-  document.querySelectorAll('.mobile-nav-link').forEach(function (link) {
-    link.addEventListener('click', function () {
-      mobileNav.hidden = true;
-      mobileBtn.setAttribute('aria-expanded', 'false');
+    // Mobile menu
+    const mobileBtn = document.getElementById("mobile-menu-btn");
+    const mobileNav = document.getElementById("mobile-nav");
+    mobileBtn.addEventListener("click", function () {
+        const open = mobileNav.hidden;
+        mobileNav.hidden = !open;
+        mobileBtn.setAttribute("aria-expanded", String(open));
     });
-  });
+
+    // Close mobile nav on link click
+    document.querySelectorAll(".mobile-nav-link").forEach(function (link) {
+        link.addEventListener("click", function () {
+            mobileNav.hidden = true;
+            mobileBtn.setAttribute("aria-expanded", "false");
+        });
+    });
 </script>
 
 <style>
-  #nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-    transition: background-color 0.3s ease, border-color 0.3s ease, backdrop-filter 0.3s ease;
-    border-bottom: 1px solid transparent;
-  }
+    #nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        transition:
+            background-color 0.3s ease,
+            border-color 0.3s ease,
+            backdrop-filter 0.3s ease;
+        border-bottom: 1px solid transparent;
+    }
 
-  #nav.scrolled {
-    background-color: color-mix(in srgb, var(--bg) 85%, transparent);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom-color: var(--border);
-  }
+    #nav.scrolled {
+        background-color: color-mix(in srgb, var(--bg) 85%, transparent);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-bottom-color: var(--border);
+    }
 
-  .nav-inner {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-    height: 64px;
-  }
+    .nav-inner {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        height: 64px;
+    }
 
-  .nav-logo {
-    font-family: var(--font-heading);
-    font-size: 1.6rem;
-    letter-spacing: 0.05em;
-    color: var(--text);
-    flex-shrink: 0;
-  }
+    .nav-logo {
+        font-family: var(--font-heading);
+        font-size: 1.6rem;
+        letter-spacing: 0.05em;
+        color: var(--text);
+        flex-shrink: 0;
+    }
 
-  .nav-links {
-    display: flex;
-    gap: 0.25rem;
-    margin-left: auto;
-  }
+    .nav-links {
+        display: flex;
+        gap: 0.25rem;
+        margin-left: auto;
+    }
 
-  .nav-link {
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: var(--text-muted);
-    padding: 0.4rem 0.75rem;
-    border-radius: 6px;
-    transition: color 0.2s, background-color 0.2s;
-  }
+    .nav-link {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--text-muted);
+        padding: 0.4rem 0.75rem;
+        border-radius: 6px;
+        transition:
+            color 0.2s,
+            background-color 0.2s;
+    }
 
-  .nav-link:hover {
-    color: var(--text);
-    background-color: var(--border);
-  }
+    .nav-link:hover {
+        color: var(--text);
+        background-color: var(--border);
+    }
 
-  .nav-actions {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
+    .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
 
-  .btn-cv {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--bg);
-    background-color: var(--accent);
-    padding: 0.4rem 0.9rem;
-    border-radius: 6px;
-    transition: background-color 0.2s, transform 0.15s;
-  }
+    .btn-cv {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--bg);
+        background-color: var(--accent);
+        padding: 0.4rem 0.9rem;
+        border-radius: 6px;
+        transition:
+            background-color 0.2s,
+            transform 0.15s;
+    }
 
-  .btn-cv:hover {
-    background-color: var(--accent-hover);
-    transform: translateY(-1px);
-  }
+    .btn-cv:hover {
+        background-color: var(--accent-hover);
+        transform: translateY(-1px);
+    }
 
-  #theme-toggle {
-    background: none;
-    border: 1px solid var(--border);
-    color: var(--text-muted);
-    width: 36px;
-    height: 36px;
-    border-radius: 6px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.9rem;
-    transition: color 0.2s, border-color 0.2s, background-color 0.2s;
-  }
+    #theme-toggle {
+        background: none;
+        border: 1px solid var(--border);
+        color: var(--text-muted);
+        width: 36px;
+        height: 36px;
+        border-radius: 6px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.9rem;
+        transition:
+            color 0.2s,
+            border-color 0.2s,
+            background-color 0.2s;
+    }
 
-  #theme-toggle:hover {
-    color: var(--accent);
-    border-color: var(--border-hover);
-    background-color: var(--bg-card);
-  }
+    #theme-toggle:hover {
+        color: var(--accent);
+        border-color: var(--border-hover);
+        background-color: var(--bg-card);
+    }
 
-  #mobile-menu-btn {
-    display: none;
-    background: none;
-    border: 1px solid var(--border);
-    color: var(--text);
-    width: 36px;
-    height: 36px;
-    border-radius: 6px;
-    cursor: pointer;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.9rem;
-    margin-left: auto;
-  }
+    #mobile-menu-btn {
+        display: none;
+        background: none;
+        border: 1px solid var(--border);
+        color: var(--text);
+        width: 36px;
+        height: 36px;
+        border-radius: 6px;
+        cursor: pointer;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.9rem;
+        margin-left: auto;
+    }
 
-  .mobile-nav {
-    background-color: var(--bg-card);
-    border-top: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;
-    gap: 0.25rem;
-  }
+    .mobile-nav {
+        background-color: var(--bg-card);
+        border-top: 1px solid var(--border);
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+        gap: 0.25rem;
+    }
 
-  .mobile-nav-link {
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--text-muted);
-    padding: 0.75rem 1rem;
-    border-radius: 6px;
-    transition: color 0.2s, background-color 0.2s;
-  }
+    .mobile-nav-link {
+        font-size: 1rem;
+        font-weight: 500;
+        color: var(--text-muted);
+        padding: 0.75rem 1rem;
+        border-radius: 6px;
+        transition:
+            color 0.2s,
+            background-color 0.2s;
+    }
 
-  .mobile-nav-link:hover {
-    color: var(--text);
-    background-color: var(--border);
-  }
+    .mobile-nav-link:hover {
+        color: var(--text);
+        background-color: var(--border);
+    }
 
-  .mobile-nav-actions {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.75rem 1rem 0.25rem;
-    border-top: 1px solid var(--border);
-    margin-top: 0.25rem;
-  }
+    .mobile-nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 1rem 0.25rem;
+        border-top: 1px solid var(--border);
+        margin-top: 0.25rem;
+    }
 
-  .mobile-cv-link {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--bg);
-    background-color: var(--accent);
-    padding: 0.4rem 0.9rem;
-    border-radius: 6px;
-    transition: background-color 0.2s;
-  }
+    .mobile-cv-link {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--bg);
+        background-color: var(--accent);
+        padding: 0.4rem 0.9rem;
+        border-radius: 6px;
+        transition: background-color 0.2s;
+    }
 
-  .mobile-cv-link:hover {
-    background-color: var(--accent-hover);
-  }
+    .mobile-cv-link:hover {
+        background-color: var(--accent-hover);
+    }
 
-  @media (max-width: 768px) {
-    .nav-links { display: none; }
-    .nav-actions { display: none; }
-    #mobile-menu-btn { display: flex; }
-  }
+    @media (max-width: 768px) {
+        .nav-links {
+            display: none;
+        }
+        .nav-actions {
+            display: none;
+        }
+        #mobile-menu-btn {
+            display: flex;
+        }
+    }
 </style>

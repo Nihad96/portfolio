@@ -46,7 +46,7 @@ export const about: AboutData = {
   cv: {
     fr: "/CV_Nihad_Zatric.pdf",
     // TODO: add your English CV to /public and update this path
-    en: "/CV_Nihad_Zatric_EN.pdf",
+    en: "/CV_Nihad_Zatric_en.pdf",
   },
 };
 
@@ -162,7 +162,7 @@ export const jobs: Job[] = [
 
   {
     company: "SERMES",
-    role: { fr: "Développeur web", en: "Web Developer" },
+    role: { fr: "Développeur web back-end", en: "Back-end Web Developer" },
     location: "Strasbourg",
     period: { fr: "2022 — 2023", en: "2022 — 2023" },
     logo: "/images/sermes.png",
@@ -284,6 +284,23 @@ export const education: Job[] = [
 // ─── Projects ─────────────────────────────────────────────────────────────────
 
 export const projects: Project[] = [
+  {
+    title: "La Wantzenau FC",
+    subtitle: {
+      fr: "Site vitrine club de football",
+      en: "Football club website",
+    },
+    year: "2026",
+    url: "https://la-wantzenau-fc.com/",
+    logo: "/images/lwfc.png",
+    logoAlt: "La Wantzenau FC",
+    stack: ["WordPress", "CSS", "SEO"],
+    description: {
+      fr: "Site vitrine pour le FC La Wantzenau, club amateur du nord de Strasbourg. Présentation du club et de ses équipes (séniors, féminines, jeunes), résultats en direct via l'API FFF, et espace partenaires entreprises.",
+      en: "Showcase website for FC La Wantzenau, an amateur football club in northern Strasbourg. Club and team pages (seniors, women's, youth), live results via the FFF API, and a business partnership section.",
+    },
+  },
+
   {
     title: "Portfolio",
     subtitle: { fr: "Ce site", en: "This site" },
