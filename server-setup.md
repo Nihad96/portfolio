@@ -79,6 +79,7 @@ curl -fsSL https://cdn.coollabs.io/coolify/install.sh | bash
 ```
 
 Après installation, Coolify est accessible sur :
+
 ```
 http://188.245.222.147:8000
 ```
@@ -144,6 +145,7 @@ Coolify > Projects > New Project > Add Resource > Public Repository
 ```
 
 Renseigner :
+
 - Repository : `https://github.com/Nihad96/portfolio`
 - Branch : `main`
 - Build pack : `Nixpacks`
@@ -202,6 +204,7 @@ Coolify > Application > Settings > "Deploy Webhook"
 ```
 
 L'URL ressemble à :
+
 ```
 https://coolify.nihad.fr/api/v1/deploy?uuid=XXXX&force=false
 ```
@@ -224,6 +227,7 @@ GitHub > repo > Settings > Secrets and variables > Actions > New repository secr
 ```
 
 Ajouter deux secrets :
+
 - `COOLIFY_WEBHOOK_URL` : l'URL complète du webhook Coolify
 - `COOLIFY_TOKEN` : le token API généré à l'étape précédente
 
@@ -257,11 +261,11 @@ Désormais, chaque `git push` sur `main` déclenche automatiquement un redéploi
 
 ## Résumé des pièges rencontrés
 
-| Problème | Cause | Solution |
-|---|---|---|
-| Build échoue avec Node 22.11.0 | Nixpacks résout une version trop ancienne | Ajouter `.node-version` avec `22.12.0` |
-| Site inaccessible après déploiement | Proxy Traefik non démarré | Servers > Proxy > Start Proxy |
-| 404 / no available server | Domaines sans préfixe `https://` dans Coolify | Utiliser `https://nihad.fr` et non `nihad.fr` |
-| Webhook GitHub retourne 401 | Coolify exposé en HTTP sur port 8000 | Configurer `coolify.nihad.fr` en HTTPS |
-| Certificat SSL non généré | DNS pas encore propagé ou proxy arrêté | Vérifier `nslookup`, redémarrer le proxy |
-| "Router defined multiple times" dans Traefik | Deux conteneurs coexistent pendant un redéploiement | Normal, disparaît automatiquement |
+| Problème                                     | Cause                                               | Solution                                      |
+| -------------------------------------------- | --------------------------------------------------- | --------------------------------------------- |
+| Build échoue avec Node 22.11.0               | Nixpacks résout une version trop ancienne           | Ajouter `.node-version` avec `22.12.0`        |
+| Site inaccessible après déploiement          | Proxy Traefik non démarré                           | Servers > Proxy > Start Proxy                 |
+| 404 / no available server                    | Domaines sans préfixe `https://` dans Coolify       | Utiliser `https://nihad.fr` et non `nihad.fr` |
+| Webhook GitHub retourne 401                  | Coolify exposé en HTTP sur port 8000                | Configurer `coolify.nihad.fr` en HTTPS        |
+| Certificat SSL non généré                    | DNS pas encore propagé ou proxy arrêté              | Vérifier `nslookup`, redémarrer le proxy      |
+| "Router defined multiple times" dans Traefik | Deux conteneurs coexistent pendant un redéploiement | Normal, disparaît automatiquement             |

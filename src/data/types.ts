@@ -46,7 +46,7 @@ export interface HeroData {
   photo: string;
   photoAlt: string;
   cta: {
-    primary:   { label: LocalizedString; href: string };
+    primary: { label: LocalizedString; href: string };
     secondary: { label: LocalizedString; href: string };
   };
 }

@@ -1,7 +1,7 @@
 ---
-import { useTranslations } from '../i18n/utils';
-import type { Locale } from '../i18n/ui';
-import type { HeroData, Job, Project } from '../data/types';
+import { useTranslations } from "../i18n/utils";
+import type { Locale } from "../i18n/ui";
+import type { HeroData, Job, Project } from "../data/types";
 
 interface Props {
   lang: Locale;
@@ -14,31 +14,34 @@ const { lang, hero, jobs, projects } = Astro.props;
 const t = useTranslations(lang);
 
 const yearsXp = new Date().getFullYear() - 2021;
-const jobCount = jobs.filter((j) => j.type === 'work').length;
+const jobCount = jobs.filter((j) => j.type === "work").length;
 const projectCount = projects.length;
 
 const stats = [
-  { value: yearsXp,       label: t('stat_xp'),       suffix: '+' },
-  { value: jobCount,      label: t('stat_jobs')                   },
-  { value: projectCount,  label: t('stat_projects')               },
+  { value: yearsXp, label: t("stat_xp"), suffix: "+" },
+  { value: jobCount, label: t("stat_jobs") },
+  { value: projectCount, label: t("stat_projects") },
 ];
 ---
 
 <section id="hero">
   <div class="container hero-inner">
-
     <!-- Text side -->
     <div class="hero-text">
-
       <!-- Mobile: top row (eyebrow + name) side by side with photo -->
       <div class="hero-top-row">
         <div class="hero-top">
-          <p class="hero-eyebrow reveal">{t('hero_eyebrow')}</p>
+          <p class="hero-eyebrow reveal">{t("hero_eyebrow")}</p>
 
           <h1 class="hero-name reveal">
-            {hero.name.split(' ').map((word) => (
-              <span class="name-word">{word}<br /></span>
-            ))}
+            {
+              hero.name.split(" ").map((word) => (
+                <span class="name-word">
+                  {word}
+                  <br />
+                </span>
+              ))
+            }
           </h1>
         </div>
 
@@ -52,27 +55,38 @@ const stats = [
       </div>
 
       <p class="hero-title reveal">
-        <span class="accent">—</span> {hero.title[lang]}
+        <span class="accent">—</span>
+        {hero.title[lang]}
       </p>
 
       <p class="hero-subtitle reveal">{hero.subtitle[lang]}</p>
 
       <div class="hero-ctas reveal">
-        <a href={hero.cta.primary.href} class="cta-primary">{hero.cta.primary.label[lang]}</a>
-        <a href={hero.cta.secondary.href} class="cta-secondary">{hero.cta.secondary.label[lang]}</a>
+        <a href={hero.cta.primary.href} class="cta-primary"
+          >{hero.cta.primary.label[lang]}</a
+        >
+        <a href={hero.cta.secondary.href} class="cta-secondary"
+          >{hero.cta.secondary.label[lang]}</a
+        >
       </div>
 
       <!-- Stats -->
       <div class="hero-stats reveal">
-        {stats.map((stat) => (
-          <div class="stat">
-            <div class="stat-number">
-              <span class="stat-value" data-target={stat.value}>0</span>
-              {stat.suffix && <span class="stat-suffix accent">{stat.suffix}</span>}
+        {
+          stats.map((stat) => (
+            <div class="stat">
+              <div class="stat-number">
+                <span class="stat-value" data-target={stat.value}>
+                  0
+                </span>
+                {stat.suffix && (
+                  <span class="stat-suffix accent">{stat.suffix}</span>
+                )}
+              </div>
+              <span class="stat-label">{stat.label}</span>
             </div>
-            <span class="stat-label">{stat.label}</span>
-          </div>
-        ))}
+          ))
+        }
       </div>
     </div>
 
@@ -83,39 +97,43 @@ const stats = [
       </div>
       <div class="photo-accent-line"></div>
     </div>
-
   </div>
 </section>
 
 <script is:inline>
   // Animate stat counters when they become visible
   function animateCounters() {
-    document.querySelectorAll('.stat-value[data-target]').forEach(function (el) {
-      const target = parseInt(el.getAttribute('data-target'), 10);
-      const duration = 1200;
-      const step = Math.ceil(duration / target);
-      let current = 0;
-      const timer = setInterval(function () {
-        current += 1;
-        el.textContent = current;
-        if (current >= target) {
-          clearInterval(timer);
-          el.textContent = target;
-        }
-      }, step);
-    });
+    document
+      .querySelectorAll(".stat-value[data-target]")
+      .forEach(function (el) {
+        const target = parseInt(el.getAttribute("data-target"), 10);
+        const duration = 1200;
+        const step = Math.ceil(duration / target);
+        let current = 0;
+        const timer = setInterval(function () {
+          current += 1;
+          el.textContent = current;
+          if (current >= target) {
+            clearInterval(timer);
+            el.textContent = target;
+          }
+        }, step);
+      });
   }
 
-  const statsBlock = document.querySelector('.hero-stats');
+  const statsBlock = document.querySelector(".hero-stats");
   if (statsBlock) {
-    const obs = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          animateCounters();
-          obs.disconnect();
-        }
-      });
-    }, { threshold: 0.5 });
+    const obs = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            animateCounters();
+            obs.disconnect();
+          }
+        });
+      },
+      { threshold: 0.5 },
+    );
     obs.observe(statsBlock);
   }
 </script>
@@ -133,15 +151,23 @@ const stats = [
 
   /* Subtle grid background */
   #hero::before {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
     background-image:
       linear-gradient(var(--border) 1px, transparent 1px),
       linear-gradient(90deg, var(--border) 1px, transparent 1px);
     background-size: 60px 60px;
-    mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 30%, transparent 100%);
-    -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 30%, transparent 100%);
+    mask-image: radial-gradient(
+      ellipse 80% 70% at 50% 50%,
+      black 30%,
+      transparent 100%
+    );
+    -webkit-mask-image: radial-gradient(
+      ellipse 80% 70% at 50% 50%,
+      black 30%,
+      transparent 100%
+    );
     pointer-events: none;
   }
 
@@ -203,13 +229,15 @@ const stats = [
     display: inline-flex;
     align-items: center;
     background-color: var(--accent);
-    color: #0C0C0C;
+    color: #0c0c0c;
     font-weight: 700;
     font-size: 0.9rem;
     padding: 0.7rem 1.4rem;
     border-radius: 8px;
     border: 1px solid transparent;
-    transition: background-color 0.2s, transform 0.15s;
+    transition:
+      background-color 0.2s,
+      transform 0.15s;
     letter-spacing: 0.02em;
   }
 
@@ -231,7 +259,10 @@ const stats = [
     font-size: 0.9rem;
     padding: 0.7rem 1.4rem;
     border-radius: 8px;
-    transition: border-color 0.2s, background-color 0.2s, transform 0.15s;
+    transition:
+      border-color 0.2s,
+      background-color 0.2s,
+      transform 0.15s;
   }
 
   .cta-secondary:hover {
@@ -325,13 +356,27 @@ const stats = [
   }
 
   /* Staggered reveal delays */
-  .hero-text .reveal:nth-child(1) { transition-delay: 0.05s; }
-  .hero-text .reveal:nth-child(2) { transition-delay: 0.1s; }
-  .hero-text .reveal:nth-child(3) { transition-delay: 0.15s; }
-  .hero-text .reveal:nth-child(4) { transition-delay: 0.2s; }
-  .hero-text .reveal:nth-child(5) { transition-delay: 0.25s; }
-  .hero-text .reveal:nth-child(6) { transition-delay: 0.3s; }
-  .hero-photo.reveal             { transition-delay: 0.2s; }
+  .hero-text .reveal:nth-child(1) {
+    transition-delay: 0.05s;
+  }
+  .hero-text .reveal:nth-child(2) {
+    transition-delay: 0.1s;
+  }
+  .hero-text .reveal:nth-child(3) {
+    transition-delay: 0.15s;
+  }
+  .hero-text .reveal:nth-child(4) {
+    transition-delay: 0.2s;
+  }
+  .hero-text .reveal:nth-child(5) {
+    transition-delay: 0.25s;
+  }
+  .hero-text .reveal:nth-child(6) {
+    transition-delay: 0.3s;
+  }
+  .hero-photo.reveal {
+    transition-delay: 0.2s;
+  }
 
   /* Mobile photo clone — hidden on desktop */
   .hero-photo-mobile {
@@ -407,19 +452,23 @@ const stats = [
     }
 
     .hero-text {
-        width: 100%;
-        max-width: 100%;
-        display: flex;
-        flex-direction: column;
+      width: 100%;
+      max-width: 100%;
+      display: flex;
+      flex-direction: column;
     }
 
     .hero-top-row {
-        justify-content: space-between;
+      justify-content: space-between;
     }
   }
 
   @media (max-width: 480px) {
-    .hero-name { font-size: clamp(3.5rem, 16vw, 5rem); }
-    .hero-stats { gap: 1.5rem; }
+    .hero-name {
+      font-size: clamp(3.5rem, 16vw, 5rem);
+    }
+    .hero-stats {
+      gap: 1.5rem;
+    }
   }
 </style>

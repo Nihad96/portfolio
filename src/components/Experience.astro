@@ -1,7 +1,7 @@
 ---
-import { useTranslations } from '../i18n/utils';
-import type { Locale } from '../i18n/ui';
-import type { Job } from '../data/types';
+import { useTranslations } from "../i18n/utils";
+import type { Locale } from "../i18n/ui";
+import type { Job } from "../data/types";
 
 interface Props {
   lang: Locale;
@@ -14,82 +14,100 @@ const t = useTranslations(lang);
 
 // Resolve "present"/"présent" to a high number so it always sorts first
 function endYear(period: string): number {
-  const parts = period.split(' — ');
-  const end = (parts[1] ?? '').trim().toLowerCase();
-  if (!end || end === 'présent' || end === 'present') return 9999;
+  const parts = period.split(" — ");
+  const end = (parts[1] ?? "").trim().toLowerCase();
+  if (!end || end === "présent" || end === "present") return 9999;
   return parseInt(end, 10) || 0;
 }
 
 // Sort using the FR value — year numbers are identical across locales
-const timeline = [...jobs, ...education].sort((a, b) => endYear(b.period.fr) - endYear(a.period.fr));
+const timeline = [...jobs, ...education].sort(
+  (a, b) => endYear(b.period.fr) - endYear(a.period.fr),
+);
 ---
 
 <section id="experience">
   <div class="container">
-
     <div class="section-header reveal">
       <span class="section-number accent">02</span>
-      <h2 class="section-title">{t('experience_title')}</h2>
+      <h2 class="section-title">{t("experience_title")}</h2>
     </div>
 
     <div class="timeline">
-      {timeline.map((item, i) => (
-        <article class="timeline-item reveal" style={`transition-delay: ${i * 0.07}s`}>
-
-          <!-- Dot + line -->
-          <div class="timeline-marker">
-            <div class="timeline-dot"></div>
-            <div class="timeline-line"></div>
-          </div>
-
-          <!-- Content -->
-          <div class="timeline-content">
-            <div class="timeline-top">
-              <div class="timeline-meta">
-                <span class="timeline-period">{item.period[lang]}</span>
-                <span class={`timeline-type ${item.type}`}>
-                  {item.type === 'work' ? t('badge_work') : t('badge_education')}
-                </span>
-              </div>
-              <div class="timeline-logo">
-                <a href={item.url} target="_blank" rel="noopener noreferrer" aria-label={item.company}>
-                  <img src={item.logo} alt={item.logoAlt} max-width="70" max-height="70" />
-                </a>
-              </div>
+      {
+        timeline.map((item, i) => (
+          <article
+            class="timeline-item reveal"
+            style={`transition-delay: ${i * 0.07}s`}
+          >
+            <div class="timeline-marker">
+              <div class="timeline-dot" />
+              <div class="timeline-line" />
             </div>
 
-            <div class="timeline-header">
-              <h3 class="timeline-role">{item.role[lang]}</h3>
-              <div class="timeline-company-info">
-                <a href={item.url} target="_blank" rel="noopener noreferrer" class="timeline-company">
-                  {item.company}
-                </a>
-                <span class="timeline-location">
-                  <i class="fa-solid fa-location-dot"></i>
-                  {item.location}
-                </span>
+            <div class="timeline-content">
+              <div class="timeline-top">
+                <div class="timeline-meta">
+                  <span class="timeline-period">{item.period[lang]}</span>
+                  <span class={`timeline-type ${item.type}`}>
+                    {item.type === "work"
+                      ? t("badge_work")
+                      : t("badge_education")}
+                  </span>
+                </div>
+                <div class="timeline-logo">
+                  <a
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={item.company}
+                  >
+                    <img
+                      src={item.logo}
+                      alt={item.logoAlt}
+                      max-width="70"
+                      max-height="70"
+                    />
+                  </a>
+                </div>
+              </div>
+
+              <div class="timeline-header">
+                <h3 class="timeline-role">{item.role[lang]}</h3>
+                <div class="timeline-company-info">
+                  <a
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="timeline-company"
+                  >
+                    {item.company}
+                  </a>
+                  <span class="timeline-location">
+                    <i class="fa-solid fa-location-dot" />
+                    {item.location}
+                  </span>
+                </div>
+              </div>
+
+              <p class="timeline-description">{item.description[lang]}</p>
+
+              <ul class="timeline-highlights">
+                {item.highlights[lang].map((h) => (
+                  <li>{h}</li>
+                ))}
+              </ul>
+
+              <div class="timeline-stack">
+                {item.stack.map((tech) => (
+                  <span class="tech-tag">{tech}</span>
+                ))}
               </div>
             </div>
-
-            <p class="timeline-description">{item.description[lang]}</p>
-
-            <ul class="timeline-highlights">
-              {item.highlights[lang].map((h) => (
-                <li>{h}</li>
-              ))}
-            </ul>
-
-            <div class="timeline-stack">
-              {item.stack.map((tech) => (
-                <span class="tech-tag">{tech}</span>
-              ))}
-            </div>
-          </div>
-
-        </article>
-      ))}
+          </article>
+        ))
+      }
     </div>
-
   </div>
 </section>
 
@@ -173,7 +191,9 @@ const timeline = [...jobs, ...education].sort((a, b) => endYear(b.period.fr) - e
     border-radius: 10px;
     padding: 1.5rem;
     margin-bottom: 1.5rem;
-    transition: border-color 0.2s, background-color 0.2s;
+    transition:
+      border-color 0.2s,
+      background-color 0.2s;
   }
 
   .timeline-content:hover {
@@ -219,7 +239,7 @@ const timeline = [...jobs, ...education].sort((a, b) => endYear(b.period.fr) - e
 
   .timeline-type.education {
     background-color: rgba(56, 189, 248, 0.1);
-    color: #38BDF8;
+    color: #38bdf8;
     border: 1px solid rgba(56, 189, 248, 0.2);
   }
 
@@ -231,7 +251,7 @@ const timeline = [...jobs, ...education].sort((a, b) => endYear(b.period.fr) - e
 
   :global(.light) .timeline-type.education {
     background-color: rgba(217, 119, 6, 0.08);
-    color: #D97706;
+    color: #d97706;
     border-color: rgba(217, 119, 6, 0.25);
   }
 
@@ -250,9 +270,13 @@ const timeline = [...jobs, ...education].sort((a, b) => endYear(b.period.fr) - e
     transition: opacity 0.2s;
   }
 
-  .timeline-logo img:hover { opacity: 1; }
+  .timeline-logo img:hover {
+    opacity: 1;
+  }
 
-  .timeline-header { margin-bottom: 0.75rem; }
+  .timeline-header {
+    margin-bottom: 0.75rem;
+  }
 
   .timeline-role {
     font-family: var(--font-heading);
@@ -275,7 +299,9 @@ const timeline = [...jobs, ...education].sort((a, b) => endYear(b.period.fr) - e
     transition: opacity 0.2s;
   }
 
-  .timeline-company:hover { opacity: 0.75; }
+  .timeline-company:hover {
+    opacity: 0.75;
+  }
 
   .timeline-location {
     font-size: 0.8rem;
@@ -309,7 +335,7 @@ const timeline = [...jobs, ...education].sort((a, b) => endYear(b.period.fr) - e
   }
 
   .timeline-highlights li::before {
-    content: '▸';
+    content: "▸";
     position: absolute;
     left: 0;
     color: var(--accent);
@@ -330,7 +356,9 @@ const timeline = [...jobs, ...education].sort((a, b) => endYear(b.period.fr) - e
     border-radius: 4px;
     background-color: var(--border);
     color: var(--text-muted);
-    transition: background-color 0.2s, color 0.2s;
+    transition:
+      background-color 0.2s,
+      color 0.2s;
   }
 
   .tech-tag:hover {
@@ -339,8 +367,16 @@ const timeline = [...jobs, ...education].sort((a, b) => endYear(b.period.fr) - e
   }
 
   @media (max-width: 600px) {
-    .timeline-item { grid-template-columns: 20px 1fr; gap: 0 1rem; }
-    .timeline-top { flex-direction: row; gap: 0.5rem; }
-    .timeline-logo { align-self: flex-start; }
+    .timeline-item {
+      grid-template-columns: 20px 1fr;
+      gap: 0 1rem;
+    }
+    .timeline-top {
+      flex-direction: row;
+      gap: 0.5rem;
+    }
+    .timeline-logo {
+      align-self: flex-start;
+    }
   }
 </style>

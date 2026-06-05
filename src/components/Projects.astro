@@ -1,7 +1,7 @@
 ---
-import { useTranslations } from '../i18n/utils';
-import type { Locale } from '../i18n/ui';
-import type { Project } from '../data/types';
+import { useTranslations } from "../i18n/utils";
+import type { Locale } from "../i18n/ui";
+import type { Project } from "../data/types";
 
 interface Props {
   lang: Locale;
@@ -14,46 +14,60 @@ const t = useTranslations(lang);
 
 <section id="projects">
   <div class="container">
-
     <div class="section-header reveal">
       <span class="section-number accent">03</span>
-      <h2 class="section-title">{t('projects_title')}</h2>
+      <h2 class="section-title">{t("projects_title")}</h2>
     </div>
 
     <div class="projects-grid">
-      {projects.map((project, i) => (
-        <article class="project-card reveal" style={`transition-delay: ${i * 0.1}s`}>
-          <div class="card-inner">
-            <div class="card-top">
-              <div class="card-logo">
-                <img src={project.logo} alt={project.logoAlt} width="40" height="40" />
+      {
+        projects.map((project, i) => (
+          <article
+            class="project-card reveal"
+            style={`transition-delay: ${i * 0.1}s`}
+          >
+            <div class="card-inner">
+              <div class="card-top">
+                <div class="card-logo">
+                  <img
+                    src={project.logo}
+                    alt={project.logoAlt}
+                    width="40"
+                    height="40"
+                  />
+                </div>
+                <div class="card-links">
+                  {project.url && (
+                    <a
+                      href={project.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="card-link"
+                      aria-label={`${project.title}`}
+                    >
+                      <i class="fa-solid fa-arrow-up-right-from-square" />
+                    </a>
+                  )}
+                </div>
               </div>
-              <div class="card-links">
-                {project.url && (
-                  <a href={project.url} target="_blank" rel="noopener noreferrer" class="card-link" aria-label={`${project.title}`}>
-                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                  </a>
-                )}
+
+              <div class="card-body">
+                <span class="card-year">{project.year}</span>
+                <h3 class="card-title">{project.title}</h3>
+                <p class="card-subtitle">{project.subtitle[lang]}</p>
+                <p class="card-description">{project.description[lang]}</p>
+              </div>
+
+              <div class="card-stack">
+                {project.stack.map((tech) => (
+                  <span class="tech-tag">{tech}</span>
+                ))}
               </div>
             </div>
-
-            <div class="card-body">
-              <span class="card-year">{project.year}</span>
-              <h3 class="card-title">{project.title}</h3>
-              <p class="card-subtitle">{project.subtitle[lang]}</p>
-              <p class="card-description">{project.description[lang]}</p>
-            </div>
-
-            <div class="card-stack">
-              {project.stack.map((tech) => (
-                <span class="tech-tag">{tech}</span>
-              ))}
-            </div>
-          </div>
-        </article>
-      ))}
+          </article>
+        ))
+      }
     </div>
-
   </div>
 </section>
 
@@ -92,7 +106,10 @@ const t = useTranslations(lang);
     background-color: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 12px;
-    transition: border-color 0.2s, background-color 0.2s, transform 0.2s;
+    transition:
+      border-color 0.2s,
+      background-color 0.2s,
+      transform 0.2s;
     overflow: hidden;
   }
 
@@ -139,7 +156,10 @@ const t = useTranslations(lang);
     border: 1px solid var(--border);
     color: var(--text-muted);
     font-size: 0.8rem;
-    transition: color 0.2s, border-color 0.2s, background-color 0.2s;
+    transition:
+      color 0.2s,
+      border-color 0.2s,
+      background-color 0.2s;
   }
 
   .card-link:hover {
@@ -200,6 +220,8 @@ const t = useTranslations(lang);
   }
 
   @media (max-width: 640px) {
-    .projects-grid { grid-template-columns: 1fr; }
+    .projects-grid {
+      grid-template-columns: 1fr;
+    }
   }
 </style>

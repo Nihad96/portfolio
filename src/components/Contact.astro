@@ -1,7 +1,7 @@
 ---
-import { useTranslations } from '../i18n/utils';
-import type { Locale } from '../i18n/ui';
-import type { ContactData } from '../data/types';
+import { useTranslations } from "../i18n/utils";
+import type { Locale } from "../i18n/ui";
+import type { ContactData } from "../data/types";
 
 interface Props {
   lang: Locale;
@@ -14,15 +14,14 @@ const t = useTranslations(lang);
 
 <section id="contact">
   <div class="container">
-
     <div class="section-header reveal">
       <span class="section-number accent">04</span>
-      <h2 class="section-title">{t('contact_title')}</h2>
+      <h2 class="section-title">{t("contact_title")}</h2>
     </div>
 
     <div class="contact-inner">
       <div class="contact-text reveal">
-        <p>{t('contact_text')}</p>
+        <p>{t("contact_text")}</p>
       </div>
 
       <div class="contact-links reveal">
@@ -33,28 +32,38 @@ const t = useTranslations(lang);
         </a>
 
         <div class="social-links">
-          {contact.socials.map((social) => (
-            <a
-              href={social.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="social-link"
-              aria-label={social.label}
-            >
-              <i class={social.icon}></i>
-              <span>{social.label}</span>
-            </a>
-          ))}
+          {
+            contact.socials.map((social) => (
+              <a
+                href={social.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="social-link"
+                aria-label={social.label}
+              >
+                <i class={social.icon} />
+                <span>{social.label}</span>
+              </a>
+            ))
+          }
         </div>
       </div>
     </div>
-
   </div>
 
   <div class="footer-bar">
     <div class="container footer-inner">
       <span>© {new Date().getFullYear()} Nihad Zatric</span>
-      <span class="footer-built">{t('footer_built')} <a href="https://astro.build" target="_blank" rel="noopener noreferrer">Astro</a> & <a href="https://tailwindcss.com" target="_blank" rel="noopener noreferrer">Tailwind</a></span>
+      <span class="footer-built"
+        >{t("footer_built")}
+        <a href="https://astro.build" target="_blank" rel="noopener noreferrer"
+          >Astro</a
+        > & <a
+          href="https://tailwindcss.com"
+          target="_blank"
+          rel="noopener noreferrer">Tailwind</a
+        ></span
+      >
     </div>
   </div>
 </section>
@@ -116,7 +125,11 @@ const t = useTranslations(lang);
     border: 1px solid var(--border);
     padding: 1rem 1.25rem;
     border-radius: 10px;
-    transition: border-color 0.2s, background-color 0.2s, color 0.2s, transform 0.15s;
+    transition:
+      border-color 0.2s,
+      background-color 0.2s,
+      color 0.2s,
+      transform 0.15s;
   }
 
   .email-link:hover {
@@ -148,7 +161,11 @@ const t = useTranslations(lang);
     border: 1px solid var(--border);
     padding: 0.6rem 1rem;
     border-radius: 8px;
-    transition: color 0.2s, border-color 0.2s, background-color 0.2s, transform 0.15s;
+    transition:
+      color 0.2s,
+      border-color 0.2s,
+      background-color 0.2s,
+      transform 0.15s;
   }
 
   .social-link:hover {
@@ -183,14 +200,21 @@ const t = useTranslations(lang);
     font-weight: 500;
   }
 
-  .footer-built a:hover { color: var(--accent); }
+  .footer-built a:hover {
+    color: var(--accent);
+  }
 
   @media (max-width: 640px) {
     .contact-inner {
       grid-template-columns: 1fr;
       gap: 2rem;
     }
-    .social-links { flex-wrap: wrap; }
-    .footer-inner { justify-content: center; text-align: center; }
+    .social-links {
+      flex-wrap: wrap;
+    }
+    .footer-inner {
+      justify-content: center;
+      text-align: center;
+    }
   }
 </style>

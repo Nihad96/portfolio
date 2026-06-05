@@ -8,14 +8,14 @@ Refonte complète de l'ancien site HTML/CSS/JS, reconstruit avec Astro v6 et Tai
 
 ## Stack
 
-| Couche | Techno |
-|---|---|
-| Framework | Astro v5 (statique) |
-| Style | Tailwind CSS v4 + CSS custom properties |
-| Langage | TypeScript |
+| Couche      | Techno                                    |
+| ----------- | ----------------------------------------- |
+| Framework   | Astro v5 (statique)                       |
+| Style       | Tailwind CSS v4 + CSS custom properties   |
+| Langage     | TypeScript                                |
 | Typographie | Bebas Neue + Space Grotesk (Google Fonts) |
-| Icônes | Font Awesome |
-| Déploiement | Coolify (VPS) via Docker |
+| Icônes      | Font Awesome                              |
+| Déploiement | Coolify (VPS) via Docker                  |
 
 ---
 
@@ -42,6 +42,7 @@ pnpm preview    # preview local du build
 ## Déploiement (Coolify)
 
 Un `Dockerfile` multi-stage est inclus :
+
 - **Build** : `node:22-alpine` + pnpm → `pnpm build`
 - **Serve** : `nginx:alpine` → sert le contenu de `dist/`
 

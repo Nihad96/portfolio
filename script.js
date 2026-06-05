@@ -1,52 +1,63 @@
-document.addEventListener('DOMContentLoaded', function () {
-  const cookie = document.cookie.split('; ').find(r => r.startsWith('display_mode='));
-  const mode = cookie ? cookie.split('=')[1] : 'light';
+document.addEventListener("DOMContentLoaded", function () {
+  const cookie = document.cookie
+    .split("; ")
+    .find((r) => r.startsWith("display_mode="));
+  const mode = cookie ? cookie.split("=")[1] : "light";
   if (!cookie) {
     let expires = new Date();
     expires.setFullYear(expires.getFullYear() + 1);
-    document.cookie = "display_mode=" + mode + "; expires=" + expires.toUTCString() + "; path=/";
+    document.cookie =
+      "display_mode=" +
+      mode +
+      "; expires=" +
+      expires.toUTCString() +
+      "; path=/";
   }
   document.body.id = mode;
 });
 
 function menu(id) {
-  document.getElementById(id + '_section').scrollIntoView({behavior:'smooth'});
+  document
+    .getElementById(id + "_section")
+    .scrollIntoView({ behavior: "smooth" });
 
-  let past_active = document.getElementsByClassName('menu_active');
-  past_active[0].classList.remove('menu_active');
-  document.getElementById(id).classList.add('menu_active');
+  let past_active = document.getElementsByClassName("menu_active");
+  past_active[0].classList.remove("menu_active");
+  document.getElementById(id).classList.add("menu_active");
 }
 
 function link(url) {
-  if(window.innerWidth > 800) {
+  if (window.innerWidth > 800) {
     window.open(url);
   }
 }
 
-function setDisplayMode(actualDisplayMode){
+function setDisplayMode(actualDisplayMode) {
   let now = new Date();
   now.setFullYear(now.getFullYear() + 1); // + 1 year
 
   let setId = document.getElementById(actualDisplayMode);
 
-  let button = document.getElementById('display_mode_button');
+  let button = document.getElementById("display_mode_button");
 
-  if (actualDisplayMode === 'dark') {
-      document.cookie = "display_mode=light; expires=" + now.toUTCString() + "; path=/";
-      setId.id = 'light';
-      button.setAttribute("onclick", "setDisplayMode('light')");
+  if (actualDisplayMode === "dark") {
+    document.cookie =
+      "display_mode=light; expires=" + now.toUTCString() + "; path=/";
+    setId.id = "light";
+    button.setAttribute("onclick", "setDisplayMode('light')");
   } else {
-      document.cookie = "display_mode=dark; expires=" + now.toUTCString() + "; path=/";
-      setId.id = 'dark';
-      button.setAttribute("onclick", "setDisplayMode('dark')");
+    document.cookie =
+      "display_mode=dark; expires=" + now.toUTCString() + "; path=/";
+    setId.id = "dark";
+    button.setAttribute("onclick", "setDisplayMode('dark')");
   }
 }
 
-content = document.getElementById('content');
+content = document.getElementById("content");
 
-premier_point = document.getElementById('projects_section').offsetHeight;
+premier_point = document.getElementById("projects_section").offsetHeight;
 
-content.onscroll = function () { 
+content.onscroll = function () {
   /* pos = document.getElementById('about_section').getBoundingClientRect();
   console.log(Math.round(pos.top));
 
@@ -57,7 +68,6 @@ content.onscroll = function () {
       console.log(sections[i].id);
     }
   } */
-
   /* if(content.scrollTop >= premier_point) {
     console.log('tata');
   } */

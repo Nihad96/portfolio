@@ -1,35 +1,32 @@
 ---
 interface Props {
-  lang: 'fr' | 'en';
+  lang: "fr" | "en";
 }
 const { lang } = Astro.props;
 
-const isFr = lang === 'fr';
-const label = isFr ? 'Switch to English' : 'Passer en français';
+const isFr = lang === "fr";
+const label = isFr ? "Switch to English" : "Passer en français";
 ---
 
-<button
-  class="lang-toggle"
-  aria-label={label}
-  title={label}
-  data-lang={lang}
->
-  {isFr ? 'EN' : 'FR'}
+<button class="lang-toggle" aria-label={label} title={label} data-lang={lang}>
+  {isFr ? "EN" : "FR"}
 </button>
 
 <script>
-  document.querySelectorAll<HTMLButtonElement>('.lang-toggle[data-lang]').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const lang = btn.getAttribute('data-lang');
-      if (lang === 'fr') {
-        localStorage.setItem('lang-pref', 'en');
-        window.location.href = '/en/';
-      } else {
-        localStorage.setItem('lang-pref', 'fr');
-        window.location.href = '/';
-      }
+  document
+    .querySelectorAll<HTMLButtonElement>(".lang-toggle[data-lang]")
+    .forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const lang = btn.getAttribute("data-lang");
+        if (lang === "fr") {
+          localStorage.setItem("lang-pref", "en");
+          window.location.href = "/en/";
+        } else {
+          localStorage.setItem("lang-pref", "fr");
+          window.location.href = "/";
+        }
+      });
     });
-  });
 </script>
 
 <style>
@@ -47,7 +44,10 @@ const label = isFr ? 'Switch to English' : 'Passer en français';
     font-size: 0.7rem;
     font-weight: 700;
     letter-spacing: 0.05em;
-    transition: color 0.2s, border-color 0.2s, background-color 0.2s;
+    transition:
+      color 0.2s,
+      border-color 0.2s,
+      background-color 0.2s;
     font-family: var(--font-body);
   }
 
