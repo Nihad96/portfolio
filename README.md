@@ -2,7 +2,7 @@
 
 Portfolio personnel disponible sur [nihad.fr](https://nihad.fr).
 
-Refonte complète de l'ancien site HTML/CSS/JS, reconstruit avec Astro v5 et Tailwind CSS v4. Single page avec navigation par ancres, dark mode par défaut, responsive mobile.
+Refonte complète de l'ancien site HTML/CSS/JS, reconstruit avec Astro v6 et Tailwind CSS v4. Single page avec navigation par ancres, dark mode par défaut, responsive mobile.
 
 ---
 
