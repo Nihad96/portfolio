@@ -1,5 +1,16 @@
 ---
-import { about, stack } from '../data/content';
+import { useTranslations } from '../i18n/utils';
+import type { Locale } from '../i18n/ui';
+import type { AboutData, Stack } from '../data/types';
+
+interface Props {
+  lang: Locale;
+  about: AboutData;
+  stack: Stack[];
+}
+
+const { lang, about, stack } = Astro.props;
+const t = useTranslations(lang);
 
 const categoryColor: Record<string, string> = {
   backend:  'tag-backend',
@@ -14,22 +25,22 @@ const categoryColor: Record<string, string> = {
 
     <div class="section-header reveal">
       <span class="section-number accent">01</span>
-      <h2 class="section-title">À propos</h2>
+      <h2 class="section-title">{t('about_title')}</h2>
     </div>
 
     <div class="about-grid">
       <div class="about-bio">
-        {about.bio.map((paragraph) => (
+        {about.bio[lang].map((paragraph) => (
           <p class="reveal">{paragraph}</p>
         ))}
-        <a href={about.cv} download class="cv-link reveal">
+        <a href={about.cv[lang]} download class="cv-link reveal">
           <i class="fa-solid fa-file-arrow-down"></i>
-          Télécharger mon CV
+          {t('about_download_cv')}
         </a>
       </div>
 
       <div class="about-stack reveal">
-        <p class="stack-label">Technologies</p>
+        <p class="stack-label">{t('about_tech')}</p>
         <div class="tag-cloud">
           {stack.map((item) => (
             <span class={`tag ${categoryColor[item.category]}`}>{item.label}</span>

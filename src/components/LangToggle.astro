@@ -1,0 +1,58 @@
+---
+interface Props {
+  lang: 'fr' | 'en';
+}
+const { lang } = Astro.props;
+
+const isFr = lang === 'fr';
+const label = isFr ? 'Switch to English' : 'Passer en français';
+---
+
+<button
+  id="lang-toggle"
+  class="lang-toggle"
+  aria-label={label}
+  title={label}
+  data-lang={lang}
+>
+  {isFr ? 'EN' : 'FR'}
+</button>
+
+<script is:inline>
+  document.getElementById('lang-toggle').addEventListener('click', function () {
+    var lang = this.getAttribute('data-lang');
+    if (lang === 'fr') {
+      localStorage.setItem('lang-pref', 'en');
+      window.location.href = '/en/';
+    } else {
+      localStorage.setItem('lang-pref', 'fr');
+      window.location.href = '/';
+    }
+  });
+</script>
+
+<style>
+  .lang-toggle {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    transition: color 0.2s, border-color 0.2s, background-color 0.2s;
+    font-family: var(--font-body);
+  }
+
+  .lang-toggle:hover {
+    color: var(--accent);
+    border-color: var(--border-hover);
+    background-color: var(--bg-card);
+  }
+</style>

@@ -1,15 +1,27 @@
 ---
+import LangToggle from './LangToggle.astro';
+import { useTranslations } from '../i18n/utils';
+import type { Locale } from '../i18n/ui';
+
+interface Props {
+  lang: Locale;
+  cvPath: string;
+}
+
+const { lang, cvPath } = Astro.props;
+const t = useTranslations(lang);
+
 const navLinks = [
-  { label: 'À propos', href: '#about' },
-  { label: 'Expériences', href: '#experience' },
-  { label: 'Projets', href: '#projects' },
-  { label: 'Contact', href: '#contact' },
+  { label: t('nav_about'),      href: '#about' },
+  { label: t('nav_experience'), href: '#experience' },
+  { label: t('nav_projects'),   href: '#projects' },
+  { label: t('nav_contact'),    href: '#contact' },
 ];
 ---
 
 <header id="nav">
   <div class="container nav-inner">
-    <a href="/" class="nav-logo">NZ<span class="accent">.</span></a>
+    <a href={lang === 'fr' ? '/' : '/en/'} class="nav-logo">NZ<span class="accent">.</span></a>
 
     <nav class="nav-links">
       {navLinks.map((link) => (
@@ -18,17 +30,18 @@ const navLinks = [
     </nav>
 
     <div class="nav-actions">
-      <a href="/CV_Nihad_Zatric.pdf" download class="btn-cv">
+      <a href={cvPath} download class="btn-cv">
         <i class="fa-solid fa-file-arrow-down"></i>
         <span>CV</span>
       </a>
-      <button id="theme-toggle" aria-label="Basculer le thème" title="Basculer le thème">
+      <LangToggle lang={lang} />
+      <button id="theme-toggle" aria-label={t('nav_toggle_theme')} title={t('nav_toggle_theme')}>
         <i class="fa-solid fa-circle-half-stroke"></i>
       </button>
     </div>
 
     <!-- Mobile hamburger -->
-    <button id="mobile-menu-btn" aria-label="Menu" aria-expanded="false">
+    <button id="mobile-menu-btn" aria-label={t('nav_menu')} aria-expanded="false">
       <i class="fa-solid fa-bars" id="hamburger-icon"></i>
     </button>
   </div>
@@ -38,6 +51,13 @@ const navLinks = [
     {navLinks.map((link) => (
       <a href={link.href} class="mobile-nav-link">{link.label}</a>
     ))}
+    <div class="mobile-nav-actions">
+      <a href={cvPath} download class="mobile-cv-link">
+        <i class="fa-solid fa-file-arrow-down"></i>
+        CV
+      </a>
+      <LangToggle lang={lang} />
+    </div>
   </div>
 </header>
 
@@ -209,6 +229,32 @@ const navLinks = [
   .mobile-nav-link:hover {
     color: var(--text);
     background-color: var(--border);
+  }
+
+  .mobile-nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem 0.25rem;
+    border-top: 1px solid var(--border);
+    margin-top: 0.25rem;
+  }
+
+  .mobile-cv-link {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--bg);
+    background-color: var(--accent);
+    padding: 0.4rem 0.9rem;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+  }
+
+  .mobile-cv-link:hover {
+    background-color: var(--accent-hover);
   }
 
   @media (max-width: 768px) {

@@ -1,5 +1,15 @@
 ---
-import { contact } from '../data/content';
+import { useTranslations } from '../i18n/utils';
+import type { Locale } from '../i18n/ui';
+import type { ContactData } from '../data/types';
+
+interface Props {
+  lang: Locale;
+  contact: ContactData;
+}
+
+const { lang, contact } = Astro.props;
+const t = useTranslations(lang);
 ---
 
 <section id="contact">
@@ -7,15 +17,12 @@ import { contact } from '../data/content';
 
     <div class="section-header reveal">
       <span class="section-number accent">04</span>
-      <h2 class="section-title">Contact</h2>
+      <h2 class="section-title">{t('contact_title')}</h2>
     </div>
 
     <div class="contact-inner">
       <div class="contact-text reveal">
-        <p>
-          Disponible pour des opportunités freelance ou une collaboration en CDI.
-          N'hésitez pas à me contacter directement par e-mail.
-        </p>
+        <p>{t('contact_text')}</p>
       </div>
 
       <div class="contact-links reveal">
@@ -47,7 +54,7 @@ import { contact } from '../data/content';
   <div class="footer-bar">
     <div class="container footer-inner">
       <span>© {new Date().getFullYear()} Nihad Zatric</span>
-      <span class="footer-built">Construit avec <a href="https://astro.build" target="_blank" rel="noopener noreferrer">Astro</a> & <a href="https://tailwindcss.com" target="_blank" rel="noopener noreferrer">Tailwind</a></span>
+      <span class="footer-built">{t('footer_built')} <a href="https://astro.build" target="_blank" rel="noopener noreferrer">Astro</a> & <a href="https://tailwindcss.com" target="_blank" rel="noopener noreferrer">Tailwind</a></span>
     </div>
   </div>
 </section>

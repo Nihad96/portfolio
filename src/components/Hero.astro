@@ -1,14 +1,26 @@
 ---
-import { hero, jobs, projects } from '../data/content';
+import { useTranslations } from '../i18n/utils';
+import type { Locale } from '../i18n/ui';
+import type { HeroData, Job, Project } from '../data/types';
+
+interface Props {
+  lang: Locale;
+  hero: HeroData;
+  jobs: Job[];
+  projects: Project[];
+}
+
+const { lang, hero, jobs, projects } = Astro.props;
+const t = useTranslations(lang);
 
 const yearsXp = new Date().getFullYear() - 2021;
 const jobCount = jobs.filter((j) => j.type === 'work').length;
 const projectCount = projects.length;
 
 const stats = [
-  { value: yearsXp, label: "ans d'expérience", suffix: '+' },
-  { value: jobCount, label: 'postes en entreprise' },
-  { value: projectCount, label: 'projets personnels' },
+  { value: yearsXp,       label: t('stat_xp'),       suffix: '+' },
+  { value: jobCount,      label: t('stat_jobs')                   },
+  { value: projectCount,  label: t('stat_projects')               },
 ];
 ---
 
@@ -21,7 +33,7 @@ const stats = [
       <!-- Mobile: top row (eyebrow + name) side by side with photo -->
       <div class="hero-top-row">
         <div class="hero-top">
-          <p class="hero-eyebrow reveal">Strasbourg, France</p>
+          <p class="hero-eyebrow reveal">{t('hero_eyebrow')}</p>
 
           <h1 class="hero-name reveal">
             {hero.name.split(' ').map((word) => (
@@ -40,14 +52,14 @@ const stats = [
       </div>
 
       <p class="hero-title reveal">
-        <span class="accent">—</span> {hero.title}
+        <span class="accent">—</span> {hero.title[lang]}
       </p>
 
-      <p class="hero-subtitle reveal">{hero.subtitle}</p>
+      <p class="hero-subtitle reveal">{hero.subtitle[lang]}</p>
 
       <div class="hero-ctas reveal">
-        <a href={hero.cta.primary.href} class="cta-primary">{hero.cta.primary.label}</a>
-        <a href={hero.cta.secondary.href} class="cta-secondary">{hero.cta.secondary.label}</a>
+        <a href={hero.cta.primary.href} class="cta-primary">{hero.cta.primary.label[lang]}</a>
+        <a href={hero.cta.secondary.href} class="cta-secondary">{hero.cta.secondary.label[lang]}</a>
       </div>
 
       <!-- Stats -->

@@ -1,0 +1,25 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Hero from '../../components/Hero.astro';
+import About from '../../components/About.astro';
+import Experience from '../../components/Experience.astro';
+import Projects from '../../components/Projects.astro';
+import Contact from '../../components/Contact.astro';
+import { hero, about, stack, jobs, education, projects, contact } from '../../data/content';
+import { useTranslations } from '../../i18n/utils';
+
+const lang = 'en' as const;
+const t = useTranslations(lang);
+---
+
+<Layout lang={lang} title={t('meta_title')} description={t('meta_description')}>
+  <Nav lang={lang} cvPath={about.cv[lang]} />
+  <main>
+    <Hero lang={lang} hero={hero} jobs={jobs} projects={projects} />
+    <About lang={lang} about={about} stack={stack} />
+    <Experience lang={lang} jobs={jobs} education={education} />
+    <Projects lang={lang} projects={projects} />
+    <Contact lang={lang} contact={contact} />
+  </main>
+</Layout>

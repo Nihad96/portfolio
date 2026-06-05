@@ -1,12 +1,27 @@
 ---
-import { jobs, education } from '../data/content';
+import { useTranslations } from '../i18n/utils';
+import type { Locale } from '../i18n/ui';
+import type { Job } from '../data/types';
 
-// Merge and sort all timeline items chronologically (most recent first)
-const timeline = [...jobs, ...education].sort((a, b) => {
-  const yearA = parseInt(a.period.split(' — ')[1] ?? a.period.split('—')[1] ?? '0');
-  const yearB = parseInt(b.period.split(' — ')[1] ?? b.period.split('—')[1] ?? '0');
-  return yearB - yearA;
-});
+interface Props {
+  lang: Locale;
+  jobs: Job[];
+  education: Job[];
+}
+
+const { lang, jobs, education } = Astro.props;
+const t = useTranslations(lang);
+
+// Resolve "present"/"présent" to a high number so it always sorts first
+function endYear(period: string): number {
+  const parts = period.split(' — ');
+  const end = (parts[1] ?? '').trim().toLowerCase();
+  if (!end || end === 'présent' || end === 'present') return 9999;
+  return parseInt(end, 10) || 0;
+}
+
+// Sort using the FR value — year numbers are identical across locales
+const timeline = [...jobs, ...education].sort((a, b) => endYear(b.period.fr) - endYear(a.period.fr));
 ---
 
 <section id="experience">
@@ -14,7 +29,7 @@ const timeline = [...jobs, ...education].sort((a, b) => {
 
     <div class="section-header reveal">
       <span class="section-number accent">02</span>
-      <h2 class="section-title">Parcours</h2>
+      <h2 class="section-title">{t('experience_title')}</h2>
     </div>
 
     <div class="timeline">
@@ -31,9 +46,9 @@ const timeline = [...jobs, ...education].sort((a, b) => {
           <div class="timeline-content">
             <div class="timeline-top">
               <div class="timeline-meta">
-                <span class="timeline-period">{item.period}</span>
+                <span class="timeline-period">{item.period[lang]}</span>
                 <span class={`timeline-type ${item.type}`}>
-                  {item.type === 'work' ? 'Expérience' : 'Formation'}
+                  {item.type === 'work' ? t('badge_work') : t('badge_education')}
                 </span>
               </div>
               <div class="timeline-logo">
@@ -44,7 +59,7 @@ const timeline = [...jobs, ...education].sort((a, b) => {
             </div>
 
             <div class="timeline-header">
-              <h3 class="timeline-role">{item.role}</h3>
+              <h3 class="timeline-role">{item.role[lang]}</h3>
               <div class="timeline-company-info">
                 <a href={item.url} target="_blank" rel="noopener noreferrer" class="timeline-company">
                   {item.company}
@@ -56,10 +71,10 @@ const timeline = [...jobs, ...education].sort((a, b) => {
               </div>
             </div>
 
-            <p class="timeline-description">{item.description}</p>
+            <p class="timeline-description">{item.description[lang]}</p>
 
             <ul class="timeline-highlights">
-              {item.highlights.map((h) => (
+              {item.highlights[lang].map((h) => (
                 <li>{h}</li>
               ))}
             </ul>

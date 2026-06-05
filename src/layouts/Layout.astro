@@ -1,36 +1,64 @@
 ---
 import '../styles/global.css';
 
+export type Locale = 'fr' | 'en';
+
 interface Props {
   title?: string;
   description?: string;
+  lang?: Locale;
 }
 
 const {
-  title = 'Nihad Zatric — Développeur web full stack',
-  description = 'Portfolio de Nihad Zatric, développeur web full stack spécialisé dans la conception d\'applications métier. Basé à Strasbourg.',
+  title,
+  description,
+  lang = 'fr',
 } = Astro.props;
 
+const isFr = lang === 'fr';
+
+const defaultTitle = isFr
+  ? 'Nihad Zatric — Développeur web full stack'
+  : 'Nihad Zatric — Full stack web developer';
+
+const defaultDescription = isFr
+  ? "Portfolio de Nihad Zatric, développeur web full stack spécialisé dans la conception d'applications métier. Basé à Strasbourg."
+  : 'Portfolio of Nihad Zatric, full stack web developer specialised in business applications. Based in Strasbourg.';
+
+const resolvedTitle       = title       ?? defaultTitle;
+const resolvedDescription = description ?? defaultDescription;
+
 const ogImage = 'https://nihad.fr/images/icons/android-chrome-512x512.png';
+
+const canonicalFr = 'https://nihad.fr/';
+const canonicalEn = 'https://nihad.fr/en/';
+const canonicalSelf = isFr ? canonicalFr : canonicalEn;
 ---
 
 <!doctype html>
-<html lang="fr">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content={description} />
+    <meta name="description" content={resolvedDescription} />
+
+    <!-- Canonical & hreflang -->
+    <link rel="canonical" href={canonicalSelf} />
+    <link rel="alternate" hreflang="fr"      href={canonicalFr} />
+    <link rel="alternate" hreflang="en"      href={canonicalEn} />
+    <link rel="alternate" hreflang="x-default" href={canonicalFr} />
 
     <!-- Open Graph -->
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:image" content={ogImage} />
-    <meta property="og:image:type" content="image/png" />
+    <meta property="og:title"       content={resolvedTitle} />
+    <meta property="og:description" content={resolvedDescription} />
+    <meta property="og:image"       content={ogImage} />
+    <meta property="og:image:type"  content="image/png" />
     <meta property="og:image:width" content="512" />
     <meta property="og:image:height" content="512" />
-    <meta property="og:image:alt" content="Nihad Zatric" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://nihad.fr" />
+    <meta property="og:image:alt"   content="Nihad Zatric" />
+    <meta property="og:type"        content="website" />
+    <meta property="og:url"         content={canonicalSelf} />
+    <meta property="og:locale"      content={isFr ? 'fr_FR' : 'en_GB'} />
 
     <!-- Favicons -->
     <link rel="apple-touch-icon" sizes="180x180" href="/images/icons/apple-touch-icon.png" />
@@ -41,7 +69,7 @@ const ogImage = 'https://nihad.fr/images/icons/android-chrome-512x512.png';
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/645c1d137c.js" crossorigin="anonymous" async></script>
 
-    <title>{title}</title>
+    <title>{resolvedTitle}</title>
 
     <!-- Dark/light mode: apply before paint to avoid flash -->
     <script is:inline>
@@ -53,6 +81,9 @@ const ogImage = 'https://nihad.fr/images/icons/android-chrome-512x512.png';
         }
       })();
     </script>
+
+    <!-- Extra head content (e.g. redirect scripts for i18n detection) -->
+    <slot name="head" />
   </head>
   <body>
     <slot />
