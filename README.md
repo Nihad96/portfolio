@@ -10,7 +10,7 @@ Refonte complète de l'ancien site HTML/CSS/JS, reconstruit avec Astro v6 et Tai
 
 | Couche      | Techno                                    |
 | ----------- | ----------------------------------------- |
-| Framework   | Astro v5 (statique)                       |
+| Framework   | Astro v6 (statique)                       |
 | Style       | Tailwind CSS v4 + CSS custom properties   |
 | Langage     | TypeScript                                |
 | Typographie | Bebas Neue + Space Grotesk (Google Fonts) |
