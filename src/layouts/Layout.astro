@@ -106,6 +106,17 @@ const canonicalSelf = isFr ? canonicalFr : canonicalEn;
     <!-- Intersection Observer for reveal animations -->
     <script is:inline>
       document.addEventListener("DOMContentLoaded", function () {
+        const prefersReduced = window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        ).matches;
+
+        if (prefersReduced) {
+          document
+            .querySelectorAll(".reveal")
+            .forEach((el) => el.classList.add("visible"));
+          return;
+        }
+
         const observer = new IntersectionObserver(
           (entries) => {
             entries.forEach((entry) => {

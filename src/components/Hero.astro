@@ -24,7 +24,7 @@ const stats = [
 ];
 ---
 
-<section id="hero">
+<section id="hero" aria-labelledby="hero-name">
   <div class="container hero-inner">
     <!-- Text side -->
     <div class="hero-text">
@@ -33,7 +33,7 @@ const stats = [
         <div class="hero-top">
           <p class="hero-eyebrow reveal">{t("hero_eyebrow")}</p>
 
-          <h1 class="hero-name reveal">
+          <h1 class="hero-name reveal" id="hero-name">
             {
               hero.name.split(" ").map((word) => (
                 <span class="name-word">
@@ -101,41 +101,85 @@ const stats = [
 </section>
 
 <script is:inline>
-  // Animate stat counters when they become visible
-  function animateCounters() {
-    document
-      .querySelectorAll(".stat-value[data-target]")
-      .forEach(function (el) {
-        const target = parseInt(el.getAttribute("data-target"), 10);
-        const duration = 1200;
-        const step = Math.ceil(duration / target);
-        let current = 0;
-        const timer = setInterval(function () {
-          current += 1;
-          el.textContent = current;
-          if (current >= target) {
-            clearInterval(timer);
-            el.textContent = target;
-          }
-        }, step);
-      });
-  }
+  (function () {
+    const statsBlock = document.querySelector(".hero-stats");
+    if (!statsBlock) return;
 
-  const statsBlock = document.querySelector(".hero-stats");
-  if (statsBlock) {
-    const obs = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            animateCounters();
-            obs.disconnect();
+    function cssTimeToMs(value) {
+      value = value.trim();
+      if (value.endsWith("ms")) return parseFloat(value);
+      return parseFloat(value) * 1000;
+    }
+
+    function animateCounters() {
+      const prefersReduced = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+
+      document
+        .querySelectorAll(".stat-value[data-target]")
+        .forEach(function (el) {
+          const target = parseInt(el.getAttribute("data-target"), 10);
+
+          if (prefersReduced || target <= 0) {
+            el.textContent = target;
+            return;
           }
+
+          const duration = 1200;
+          let start = null;
+
+          function step(timestamp) {
+            if (!start) start = timestamp;
+            const elapsed = timestamp - start;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            el.textContent = Math.round(eased * target);
+            if (progress < 1) {
+              requestAnimationFrame(step);
+            } else {
+              el.textContent = target;
+            }
+          }
+
+          requestAnimationFrame(step);
         });
-      },
-      { threshold: 0.5 },
-    );
-    obs.observe(statsBlock);
-  }
+    }
+
+    function startWithRevealOverlap() {
+      const prefersReduced = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+
+      if (prefersReduced) {
+        animateCounters();
+        return;
+      }
+
+      const style = getComputedStyle(statsBlock);
+      const delayMs = cssTimeToMs(style.transitionDelay.split(",")[0]);
+      const durationMs = cssTimeToMs(style.transitionDuration.split(",")[0]);
+      // Midpoint between instant start and waiting for full reveal (~375ms)
+      setTimeout(animateCounters, (delayMs + durationMs) / 2);
+    }
+
+    function whenVisible() {
+      if (statsBlock.classList.contains("visible")) {
+        startWithRevealOverlap();
+        return;
+      }
+
+      const mo = new MutationObserver(function () {
+        if (statsBlock.classList.contains("visible")) {
+          mo.disconnect();
+          startWithRevealOverlap();
+        }
+      });
+      mo.observe(statsBlock, { attributes: true, attributeFilter: ["class"] });
+    }
+
+    whenVisible();
+  })();
 </script>
 
 <style>
