@@ -12,11 +12,11 @@ const { lang, projects } = Astro.props;
 const t = useTranslations(lang);
 ---
 
-<section id="projects">
+<section id="projects" aria-labelledby="projects-heading">
   <div class="container">
     <div class="section-header reveal">
       <span class="section-number accent">03</span>
-      <h2 class="section-title">{t("projects_title")}</h2>
+      <h2 class="section-title" id="projects-heading">{t("projects_title")}</h2>
     </div>
 
     <div class="projects-grid">
@@ -43,9 +43,12 @@ const t = useTranslations(lang);
                       target="_blank"
                       rel="noopener noreferrer"
                       class="card-link"
-                      aria-label={`${project.title}`}
+                      aria-label={`${t("project_visit_label")} ${project.title}`}
                     >
-                      <i class="fa-solid fa-arrow-up-right-from-square" />
+                      <i
+                        class="fa-solid fa-arrow-up-right-from-square"
+                        aria-hidden="true"
+                      />
                     </a>
                   )}
                 </div>

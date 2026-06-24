@@ -31,6 +31,7 @@ export const translations = {
 
     // Projects
     projects_title: "Projets",
+    project_visit_label: "Voir le projet",
 
     // Contact
     contact_title: "Contact",
@@ -74,6 +75,7 @@ export const translations = {
 
     // Projects
     projects_title: "Projects",
+    project_visit_label: "Visit",
 
     // Contact
     contact_title: "Contact",

@@ -12,11 +12,11 @@ const { lang, contact } = Astro.props;
 const t = useTranslations(lang);
 ---
 
-<section id="contact">
+<section id="contact" aria-labelledby="contact-heading">
   <div class="container">
     <div class="section-header reveal">
       <span class="section-number accent">04</span>
-      <h2 class="section-title">{t("contact_title")}</h2>
+      <h2 class="section-title" id="contact-heading">{t("contact_title")}</h2>
     </div>
 
     <div class="contact-inner">
@@ -26,9 +26,12 @@ const t = useTranslations(lang);
 
       <div class="contact-links reveal">
         <a href={`mailto:${contact.email}`} class="email-link">
-          <i class="fa-solid fa-envelope"></i>
+          <i class="fa-solid fa-envelope" aria-hidden="true"></i>
           {contact.email}
-          <i class="fa-solid fa-arrow-up-right-from-square email-arrow"></i>
+          <i
+            class="fa-solid fa-arrow-up-right-from-square email-arrow"
+            aria-hidden="true"
+          ></i>
         </a>
 
         <div class="social-links">
@@ -41,7 +44,7 @@ const t = useTranslations(lang);
                 class="social-link"
                 aria-label={social.label}
               >
-                <i class={social.icon} />
+                <i class={social.icon} aria-hidden="true" />
                 <span>{social.label}</span>
               </a>
             ))

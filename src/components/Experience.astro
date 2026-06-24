@@ -26,11 +26,11 @@ const timeline = [...jobs, ...education].sort(
 );
 ---
 
-<section id="experience">
+<section id="experience" aria-labelledby="experience-heading">
   <div class="container">
     <div class="section-header reveal">
       <span class="section-number accent">02</span>
-      <h2 class="section-title">{t("experience_title")}</h2>
+      <h2 class="section-title" id="experience-heading">{t("experience_title")}</h2>
     </div>
 
     <div class="timeline">
@@ -65,8 +65,6 @@ const timeline = [...jobs, ...education].sort(
                     <img
                       src={item.logo}
                       alt={item.logoAlt}
-                      max-width="70"
-                      max-height="70"
                     />
                   </a>
                 </div>
@@ -84,7 +82,7 @@ const timeline = [...jobs, ...education].sort(
                     {item.company}
                   </a>
                   <span class="timeline-location">
-                    <i class="fa-solid fa-location-dot" />
+                    <i class="fa-solid fa-location-dot" aria-hidden="true" />
                     {item.location}
                   </span>
                 </div>

@@ -20,11 +20,11 @@ const categoryColor: Record<string, string> = {
 };
 ---
 
-<section id="about">
+<section id="about" aria-labelledby="about-heading">
   <div class="container">
     <div class="section-header reveal">
       <span class="section-number accent">01</span>
-      <h2 class="section-title">{t("about_title")}</h2>
+      <h2 class="section-title" id="about-heading">{t("about_title")}</h2>
     </div>
 
     <div class="about-grid">
@@ -36,7 +36,7 @@ const categoryColor: Record<string, string> = {
           rel="noopener noreferrer"
           class="cv-link reveal"
         >
-          <i class="fa-solid fa-eye"></i>
+          <i class="fa-solid fa-eye" aria-hidden="true"></i>
           {t("about_download_cv")}
         </a>
       </div>
