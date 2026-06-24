@@ -16,7 +16,7 @@ export const hero: HeroData = {
     fr: "Je conçois des applications web orientées métier, du back-end à l'interface.",
     en: "I design business-oriented web applications, from back-end to interface.",
   },
-  photo: "/images/DSC01783.png",
+  photo: "/images/DSC01783.webp",
   photoAlt: "Nihad Zatric",
   cta: {
     primary: {
@@ -298,6 +298,23 @@ export const projects: Project[] = [
     description: {
       fr: "Site vitrine pour le FC La Wantzenau, club amateur du nord de Strasbourg. Présentation du club et de ses équipes (séniors, féminines, jeunes), résultats en direct via l'API FFF, et espace partenaires entreprises.",
       en: "Showcase website for FC La Wantzenau, an amateur football club in northern Strasbourg. Club and team pages (seniors, women's, youth), live results via the FFF API, and a business partnership section.",
+    },
+  },
+
+  {
+    title: "ALEXISTANNEAU.COM",
+    subtitle: {
+      fr: "Portfolio professionnel",
+      en: "Professional portfolio",
+    },
+    year: "2026",
+    url: "https://alexistanneau.com/",
+    logo: "/images/alexistanneau.png",
+    logoAlt: "Alexis Tanneau",
+    stack: ["Astro", "Tailwind CSS", "TypeScript"],
+    description: {
+      fr: "Portfolio pour Alexis Tanneau, spécialiste gaming & creator economy. Présentation de campagnes de marque, parcours professionnel, formation et compétences, avec mise en avant des indicateurs d'impact (vues, deals, expérience). Site statique performant, responsive et orienté conversion (CV, contact, LinkedIn).",
+      en: "Portfolio for Alexis Tanneau, a gaming & creator economy specialist. Showcases brand campaigns, work history, education and skills, with highlighted impact metrics (views, deals, experience). Performant static site, responsive and conversion-focused (CV, contact, LinkedIn).",
     },
   },
 

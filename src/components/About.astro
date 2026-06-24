@@ -162,64 +162,41 @@ const categoryColor: Record<string, string> = {
 
   /* Category tints */
   .tag-backend {
-    color: #c6ff00;
-    border-color: rgba(198, 255, 0, 0.2);
-    background-color: rgba(198, 255, 0, 0.05);
+    color: var(--color-tag-backend);
+    border-color: color-mix(in srgb, var(--color-tag-backend) 20%, transparent);
+    background-color: color-mix(in srgb, var(--color-tag-backend) 5%, transparent);
   }
   .tag-frontend {
-    color: #38bdf8;
-    border-color: rgba(56, 189, 248, 0.2);
-    background-color: rgba(56, 189, 248, 0.05);
+    color: var(--color-tag-frontend);
+    border-color: color-mix(in srgb, var(--color-tag-frontend) 20%, transparent);
+    background-color: color-mix(in srgb, var(--color-tag-frontend) 5%, transparent);
   }
   .tag-db {
-    color: #fb923c;
-    border-color: rgba(251, 146, 60, 0.2);
-    background-color: rgba(251, 146, 60, 0.05);
+    color: var(--color-tag-db);
+    border-color: color-mix(in srgb, var(--color-tag-db) 20%, transparent);
+    background-color: color-mix(in srgb, var(--color-tag-db) 5%, transparent);
   }
   .tag-tools {
-    color: #a78bfa;
-    border-color: rgba(167, 139, 250, 0.2);
-    background-color: rgba(167, 139, 250, 0.05);
+    color: var(--color-tag-tools);
+    border-color: color-mix(in srgb, var(--color-tag-tools) 20%, transparent);
+    background-color: color-mix(in srgb, var(--color-tag-tools) 5%, transparent);
   }
 
-  /* Light mode — palette diversifiée */
-  :global(.light) .tag-backend {
-    color: #2563eb;
-    border-color: rgba(37, 99, 235, 0.35);
-    background-color: rgba(37, 99, 235, 0.06);
+  .tag-backend:hover {
+    border-color: color-mix(in srgb, var(--color-tag-backend) 50%, transparent);
+    background-color: color-mix(in srgb, var(--color-tag-backend) 12%, transparent);
   }
-  :global(.light) .tag-frontend {
-    color: #0d9488;
-    border-color: rgba(13, 148, 136, 0.35);
-    background-color: rgba(13, 148, 136, 0.06);
+  .tag-frontend:hover {
+    border-color: color-mix(in srgb, var(--color-tag-frontend) 50%, transparent);
+    background-color: color-mix(in srgb, var(--color-tag-frontend) 12%, transparent);
   }
-  :global(.light) .tag-db {
-    color: #e11d48;
-    border-color: rgba(225, 29, 72, 0.35);
-    background-color: rgba(225, 29, 72, 0.06);
+  .tag-db:hover {
+    border-color: color-mix(in srgb, var(--color-tag-db) 50%, transparent);
+    background-color: color-mix(in srgb, var(--color-tag-db) 12%, transparent);
   }
-  :global(.light) .tag-tools {
-    color: #7c3aed;
-    border-color: rgba(124, 58, 237, 0.35);
-    background-color: rgba(124, 58, 237, 0.06);
-  }
-
-  /* Hover avec bordure colorée par catégorie en light mode */
-  :global(.light) .tag-backend:hover {
-    border-color: rgba(37, 99, 235, 0.7);
-    background-color: rgba(37, 99, 235, 0.12);
-  }
-  :global(.light) .tag-frontend:hover {
-    border-color: rgba(13, 148, 136, 0.7);
-    background-color: rgba(13, 148, 136, 0.12);
-  }
-  :global(.light) .tag-db:hover {
-    border-color: rgba(225, 29, 72, 0.7);
-    background-color: rgba(225, 29, 72, 0.12);
-  }
-  :global(.light) .tag-tools:hover {
-    border-color: rgba(124, 58, 237, 0.7);
-    background-color: rgba(124, 58, 237, 0.12);
+  .tag-tools:hover {
+    border-color: color-mix(in srgb, var(--color-tag-tools) 50%, transparent);
+    background-color: color-mix(in srgb, var(--color-tag-tools) 12%, transparent);
   }
 
   @media (max-width: 768px) {

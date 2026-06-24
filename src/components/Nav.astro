@@ -148,6 +148,7 @@ const navLinks = [
 
   #nav.scrolled {
     background-color: color-mix(in srgb, var(--bg) 85%, transparent);
+    /* Note: backdrop-filter is not interpolatable in Firefox — blur will snap on scroll. */
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border-bottom-color: var(--border);
@@ -202,7 +203,7 @@ const navLinks = [
     gap: 0.4rem;
     font-size: 0.875rem;
     font-weight: 600;
-    color: var(--bg);
+    color: var(--color-on-accent);
     background-color: var(--accent);
     padding: 0.4rem 0.9rem;
     border-radius: 6px;
@@ -319,7 +320,7 @@ const navLinks = [
     gap: 0.4rem;
     font-size: 0.875rem;
     font-weight: 600;
-    color: var(--bg);
+    color: var(--color-on-accent);
     background-color: var(--accent);
     padding: 0.4rem 0.9rem;
     border-radius: 6px;

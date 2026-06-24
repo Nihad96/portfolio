@@ -22,6 +22,8 @@ const stats = [
   { value: jobCount, label: t("stat_jobs") },
   { value: projectCount, label: t("stat_projects") },
 ];
+
+const heroPhotoFallback = hero.photo.replace(/\.webp$/i, ".png");
 ---
 
 <section id="hero" aria-labelledby="hero-name">
@@ -48,7 +50,17 @@ const stats = [
         <!-- Photo side (moved inside hero-text for mobile row, hidden on desktop) -->
         <div class="hero-photo-mobile reveal">
           <div class="photo-frame">
-            <img src={hero.photo} alt={hero.photoAlt} loading="eager" />
+            <picture>
+              <source srcset={hero.photo} type="image/webp" />
+              <img
+                src={heroPhotoFallback}
+                alt={hero.photoAlt}
+                loading="eager"
+                fetchpriority="high"
+                width="380"
+                height="380"
+              />
+            </picture>
           </div>
           <div class="photo-accent-line"></div>
         </div>
@@ -93,7 +105,17 @@ const stats = [
     <!-- Photo side (desktop only) -->
     <div class="hero-photo reveal">
       <div class="photo-frame">
-        <img src={hero.photo} alt={hero.photoAlt} loading="eager" />
+        <picture>
+          <source srcset={hero.photo} type="image/webp" />
+          <img
+            src={heroPhotoFallback}
+            alt={hero.photoAlt}
+            loading="eager"
+            fetchpriority="high"
+            width="380"
+            height="380"
+          />
+        </picture>
       </div>
       <div class="photo-accent-line"></div>
     </div>
@@ -273,7 +295,7 @@ const stats = [
     display: inline-flex;
     align-items: center;
     background-color: var(--accent);
-    color: #0c0c0c;
+    color: var(--color-on-accent);
     font-weight: 700;
     font-size: 0.9rem;
     padding: 0.7rem 1.4rem;
@@ -283,10 +305,6 @@ const stats = [
       background-color 0.2s,
       transform 0.15s;
     letter-spacing: 0.02em;
-  }
-
-  :global(.light) .cta-primary {
-    color: #ffffff;
   }
 
   .cta-primary:hover {
@@ -460,39 +478,6 @@ const stats = [
       flex: 1;
       min-width: 0;
       max-width: 240px;
-    }
-
-    .hero-photo-mobile .photo-frame {
-      border-radius: 12px;
-      overflow: hidden;
-      border: 1px solid var(--border);
-      position: relative;
-      z-index: 1;
-    }
-
-    .hero-photo-mobile .photo-frame img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      filter: grayscale(20%);
-      transition: filter 0.3s;
-    }
-
-    .hero-photo-mobile .photo-frame:hover img {
-      filter: grayscale(0%);
-    }
-
-    .hero-photo-mobile .photo-accent-line {
-      position: absolute;
-      bottom: -12px;
-      right: -12px;
-      width: 60%;
-      height: 60%;
-      border-bottom: 2px solid var(--accent);
-      border-right: 2px solid var(--accent);
-      border-radius: 0 0 12px 0;
-      z-index: 0;
     }
 
     .hero-text {
