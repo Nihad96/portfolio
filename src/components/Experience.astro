@@ -12,18 +12,8 @@ interface Props {
 const { lang, jobs, education } = Astro.props;
 const t = useTranslations(lang);
 
-// Resolve "present"/"présent" to a high number so it always sorts first
-function endYear(period: string): number {
-  const parts = period.split(" — ");
-  const end = (parts[1] ?? "").trim().toLowerCase();
-  if (!end || end === "présent" || end === "present") return 9999;
-  return parseInt(end, 10) || 0;
-}
-
-// Sort using the FR value — year numbers are identical across locales
-const timeline = [...jobs, ...education].sort(
-  (a, b) => endYear(b.period.fr) - endYear(a.period.fr),
-);
+// Order follows content.ts (most recent first within each list)
+const timeline = [...jobs, ...education];
 ---
 
 <section id="experience" aria-labelledby="experience-heading">
