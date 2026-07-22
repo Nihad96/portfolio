@@ -131,7 +131,7 @@ export const jobs: Job[] = [
     url: "https://france-solar.fr/",
     stack: [
       "Laravel 10",
-      "PHP 8.2",
+      "PHP 8.1",
       "Vue 2 & 3",
       "Nuxt 3",
       "Vuetify",
